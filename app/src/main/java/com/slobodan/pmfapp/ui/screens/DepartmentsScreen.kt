@@ -1,6 +1,5 @@
 package com.slobodan.pmfapp.ui.screens
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,18 +21,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.slobodan.pmfapp.R
-import com.slobodan.pmfapp.data.model.DegreeLevels
-import com.slobodan.pmfapp.data.model.Departments
+import com.slobodan.pmfapp.data.model.DegreeLevel
+import com.slobodan.pmfapp.data.model.Department
 
 @Composable
 fun DepartmentsScreen(
-    selectedDegree: DegreeLevels,
-    onDepartmentSelected: (Departments) -> Unit,
+    selectedDegree: DegreeLevel,
+    onDepartmentSelected: (Department) -> Unit,
     onBackClick: () -> Unit,
 ) {
     Surface(
@@ -88,39 +86,39 @@ fun DepartmentsScreen(
                 }
 
                 Button(
-                    onClick = { onDepartmentSelected(Departments.BIO) },
+                    onClick = { onDepartmentSelected(Department.BIO) },
                     modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = Departments.BIO.displayName) }
+                    content = { Text(text = Department.BIO.displayName) }
                 )
 
                 Button(
-                    onClick = { onDepartmentSelected(Departments.GEO) },
+                    onClick = { onDepartmentSelected(Department.GEO) },
                     modifier = Modifier.fillMaxWidth(),
-                    content ={ Text(text = Departments.GEO.displayName) }
+                    content ={ Text(text = Department.GEO.displayName) }
                 )
 
                 Button(
-                    onClick = { onDepartmentSelected(Departments.MATH) },
+                    onClick = { onDepartmentSelected(Department.MATH) },
                     modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = Departments.MATH.displayName) }
+                    content = { Text(text = Department.MATH.displayName) }
                 )
 
                 Button(
-                    onClick = { onDepartmentSelected(Departments.CS) },
+                    onClick = { onDepartmentSelected(Department.CS) },
                     modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = Departments.CS.displayName) }
+                    content = { Text(text = Department.CS.displayName) }
                 )
 
                 Button(
-                    onClick = { onDepartmentSelected(Departments.PHY) },
+                    onClick = { onDepartmentSelected(Department.PHY) },
                     modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = Departments.PHY.displayName) }
+                    content = { Text(text = Department.PHY.displayName) }
                 )
 
                 Button(
-                    onClick = { onDepartmentSelected(Departments.CHE) },
+                    onClick = { onDepartmentSelected(Department.CHE) },
                     modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = Departments.CHE.displayName) }
+                    content = { Text(text = Department.CHE.displayName) }
                 )
             }
         }

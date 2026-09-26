@@ -15,18 +15,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.slobodan.pmfapp.data.model.DegreeLevels
-import com.slobodan.pmfapp.data.model.Departments
+import com.slobodan.pmfapp.data.model.DegreeLevel
+import com.slobodan.pmfapp.data.model.Department
+import com.slobodan.pmfapp.data.model.StudyProgram
+import com.slobodan.pmfapp.data.model.StudyPrograms
 import com.slobodan.pmfapp.navigation.PMFAppScreens
 import com.slobodan.pmfapp.ui.screens.DegreeLevelsScreen
 import com.slobodan.pmfapp.ui.screens.DepartmentsScreen
+import com.slobodan.pmfapp.ui.screens.ProgramScreen
 import com.slobodan.pmfapp.ui.screens.StudyProgramsScreen
 
 @Composable
 fun PMFApp() {
     val navController = rememberNavController()
-    val selectedDegree = remember { mutableStateOf<DegreeLevels?>(null) }
-    val selectedDepartment = remember { mutableStateOf<Departments?>(null) }
+    val selectedDegree = remember { mutableStateOf<DegreeLevel?>(null) }
+    val selectedDepartment = remember { mutableStateOf<Department?>(null) }
+    val selectedProgram = remember { mutableStateOf<StudyPrograms?>(null) }
 
     Scaffold(
         bottomBar = {
@@ -80,8 +84,17 @@ fun PMFApp() {
                     selectedDegree = selectedDegree.value!!,
                     selectedDepartment = selectedDepartment.value!!,
                     onStudyProgramSelected = { program ->
-                        // whatever comes next
+                        selectedProgram.value = program
+                        navController.navigate(PMFAppScreens.PROGRAM_SCREEN.name)
                     },
+                    onBackClick = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+            composable(route = PMFAppScreens.PROGRAM_SCREEN.name) {
+                ProgramScreen(
+                    selectedProgram = selectedProgram.value!!,
                     onBackClick = {
                         navController.popBackStack()
                     }

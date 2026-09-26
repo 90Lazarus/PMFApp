@@ -26,27 +26,27 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.slobodan.pmfapp.R
-import com.slobodan.pmfapp.data.model.DegreeLevels
-import com.slobodan.pmfapp.data.model.Departments
+import com.slobodan.pmfapp.data.model.DegreeLevel
+import com.slobodan.pmfapp.data.model.Department
 import com.slobodan.pmfapp.data.model.StudyPrograms
 import com.slobodan.pmfapp.data.source.availablePrograms
 
 @Composable
 fun StudyProgramsScreen(
-    selectedDegree: DegreeLevels,
-    selectedDepartment: Departments,
+    selectedDegree: DegreeLevel,
+    selectedDepartment: Department,
     onStudyProgramSelected: (StudyPrograms) -> Unit,
     onBackClick: () -> Unit,
 ) {
     val programs = availablePrograms[selectedDegree to selectedDepartment]
 
     val image = when (selectedDepartment) {
-        Departments.BIO -> R.drawable.logo_biologija
-        Departments.GEO -> R.drawable.logo_geografija
-        Departments.MATH -> R.drawable.logo_matematika
-        Departments.CS -> R.drawable.logo_r_nauke
-        Departments.PHY -> R.drawable.logo_fizika
-        Departments.CHE -> R.drawable.logo_hemija
+        Department.BIO -> R.drawable.logo_biologija
+        Department.GEO -> R.drawable.logo_geografija
+        Department.MATH -> R.drawable.logo_matematika
+        Department.CS -> R.drawable.logo_r_nauke
+        Department.PHY -> R.drawable.logo_fizika
+        Department.CHE -> R.drawable.logo_hemija
     }
 
     Surface(

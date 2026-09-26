@@ -21,11 +21,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.slobodan.pmfapp.R
-import com.slobodan.pmfapp.data.model.DegreeLevels
+import com.slobodan.pmfapp.data.model.DegreeLevel
 
 @Composable
 fun DegreeLevelsScreen(
-    onDegreeSelected: (DegreeLevels) -> Unit
+    onDegreeSelected: (DegreeLevel) -> Unit
 ) {
     Surface(
         modifier = Modifier.padding(12.dp),
@@ -69,21 +69,21 @@ fun DegreeLevelsScreen(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Button(
-                    onClick = { onDegreeSelected(DegreeLevels.BACHELORS) },
+                    onClick = { onDegreeSelected(DegreeLevel.BACHELORS) },
                     modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = DegreeLevels.BACHELORS.displayName) }
+                    content = { Text(text = DegreeLevel.BACHELORS.displayName) }
                 )
 
                 Button(
-                    onClick = { onDegreeSelected(DegreeLevels.MASTERS) },
+                    onClick = { onDegreeSelected(DegreeLevel.MASTERS) },
                     modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = DegreeLevels.MASTERS.displayName) }
+                    content = { Text(text = DegreeLevel.MASTERS.displayName) }
                 )
 
                 Button(
-                    onClick = { onDegreeSelected(DegreeLevels.DOCTORS) },
+                    onClick = { onDegreeSelected(DegreeLevel.DOCTORS) },
                     modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = DegreeLevels.DOCTORS.displayName) }
+                    content = { Text(text = DegreeLevel.DOCTORS.displayName) }
                 )
             }
         }

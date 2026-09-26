@@ -1,6 +1,6 @@
 package com.slobodan.pmfapp.data.model
 
-enum class Departments(val displayName: String) {
+enum class Department(val displayName: String) {
     BIO("Biologija i ekologija"),
     GEO("Geografija i turizam"),
     MATH("Matematika"),
