@@ -31,6 +31,7 @@ fun PMFApp() {
     val selectedDegree = remember { mutableStateOf<DegreeLevel?>(null) }
     val selectedDepartment = remember { mutableStateOf<Department?>(null) }
     val selectedProgram = remember { mutableStateOf<StudyPrograms?>(null) }
+    val selectedProgramId = remember { mutableStateOf<Int?>(null) }
 
     Scaffold(
         bottomBar = {

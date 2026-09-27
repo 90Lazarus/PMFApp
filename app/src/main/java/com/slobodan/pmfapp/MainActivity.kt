@@ -23,10 +23,14 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launch {
             val db = PMFAppDatabase.getDatabase(this@MainActivity)
 
-            val subjects = db.subjectDao().getSubjects()
-
+            val subjects = db.subjectDao().getSubjectsLowDetails(1)
             subjects.forEach {
-                Log.d("DATABASE_TEST", it.name)
+                Log.d("DATABASE_TEST", "${it.code} | ${it.name} | ${it.semester} | ${it.espb}")
+            }
+
+            val studyPrograms = db.studyProgramDao().getStudyProgramsWithDetails(1, 4)
+            studyPrograms.forEach {
+                Log.d("DATABASE_TEST", "${it.studyProgram.name} | ${it.degreeLevel.name} | ${it.department.name}")
             }
         }
     }

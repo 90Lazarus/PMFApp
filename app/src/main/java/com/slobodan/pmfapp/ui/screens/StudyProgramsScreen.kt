@@ -25,11 +25,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.slobodan.pmfapp.R
 import com.slobodan.pmfapp.data.model.DegreeLevel
 import com.slobodan.pmfapp.data.model.Department
 import com.slobodan.pmfapp.data.model.StudyPrograms
 import com.slobodan.pmfapp.data.source.availablePrograms
+import com.slobodan.pmfapp.viewmodel.StudyProgramViewModel
 
 @Composable
 fun StudyProgramsScreen(
@@ -37,6 +39,7 @@ fun StudyProgramsScreen(
     selectedDepartment: Department,
     onStudyProgramSelected: (StudyPrograms) -> Unit,
     onBackClick: () -> Unit,
+    viewModel: StudyProgramViewModel = viewModel(factory = StudyProgramViewModel.Factory)
 ) {
     val programs = availablePrograms[selectedDegree to selectedDepartment]
 

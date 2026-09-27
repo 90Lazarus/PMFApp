@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.slobodan.pmfapp.data.dao.DegreeLevelDao
+import com.slobodan.pmfapp.data.dao.DepartmentDao
+import com.slobodan.pmfapp.data.dao.StudyProgramDao
 import com.slobodan.pmfapp.data.dao.SubjectDao
 import com.slobodan.pmfapp.data.entity.DegreeLevelEntity
 import com.slobodan.pmfapp.data.entity.DepartmentEntity
@@ -16,6 +19,9 @@ import com.slobodan.pmfapp.data.entity.SubjectEntity
     exportSchema = false
 )
 abstract class PMFAppDatabase : RoomDatabase() {
+    abstract fun degreeLevelDao(): DegreeLevelDao
+    abstract fun departmentDao(): DepartmentDao
+    abstract fun studyProgramDao(): StudyProgramDao
     abstract fun subjectDao(): SubjectDao
     companion object {
         @Volatile
