@@ -7,12 +7,17 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity (tableName = "predmeti",
-    indices = [Index("studijski_program_id")],
+    indices = [Index("studijski_program_id", "izborni_blok_id")],
     foreignKeys = [
         ForeignKey(
             entity = StudyProgramEntity::class,
             parentColumns = ["id"],
             childColumns = ["studijski_program_id"]
+        ),
+        ForeignKey(
+            entity = OptionalBlockEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["izborni_blok_id"]
         ),
     ])
 data class SubjectEntity(
@@ -37,7 +42,7 @@ data class SubjectEntity(
     @ColumnInfo(name = "status")
     val status: String?,
 
-    @ColumnInfo(name = "broj_izbornog_bloka")
+    @ColumnInfo(name = "izborni_blok_id")
     val numOptBlock: Int?,
 
     @ColumnInfo(name = "semestar")

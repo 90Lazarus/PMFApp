@@ -13,7 +13,7 @@ interface SubjectDao {
     @Query("SELECT * FROM predmeti")
     suspend fun getSubjectsWithDetails(): List<SubjectWithDetails>
 
-    @Query("SELECT id, sifra, naziv, semestar, espb FROM predmeti WHERE studijski_program_id = :studyProgramId")
+    @Query("SELECT id, sifra, naziv, status, izborni_blok_id, semestar, espb, br_predavanja, br_vezbe, br_don, br_ostalo FROM predmeti WHERE studijski_program_id = :studyProgramId")
     suspend fun getSubjectsLowDetails(studyProgramId: Int): List<SubjectLowDetails>
 
     @Transaction

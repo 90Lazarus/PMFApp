@@ -224,14 +224,14 @@ fun ProgramScreen(
                     )
                 }
                 Button(
-
                     //modifier = Modifier.weight(1f),
                     //contentPadding = PaddingValues(0.dp),
                     onClick = { selectedYear = 0 },
-//                    colors = ButtonDefaults.buttonColors(
-//                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
-//                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant
-//                    )
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (selectedYear == 0)
+                            MaterialTheme.colorScheme.primary
+                        else MaterialTheme.colorScheme.surfaceVariant
+                    )
                 ) { Text(text = "Sve") }
                 //Row(
                 //    modifier = Modifier.weight(1f)
@@ -241,10 +241,11 @@ fun ProgramScreen(
                         //    modifier = Modifier.weight(1f),
                             //contentPadding = PaddingValues(0.dp),
                             onClick = { selectedYear = i },
-//                            colors = ButtonDefaults.buttonColors(
-//                                containerColor = MaterialTheme.colorScheme.surfaceVariant,
-//                                contentColor = MaterialTheme.colorScheme.onSurfaceVariant
-//                            )
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (selectedYear == i)
+                                    MaterialTheme.colorScheme.primary
+                                else MaterialTheme.colorScheme.surfaceVariant
+                            )
                         ) {
                             //Box(
                             //    modifier = Modifier.fillMaxWidth(),
@@ -300,53 +301,115 @@ fun ProgramScreen(
                         textAlign = TextAlign.Center
                     )
                 }
+
                 Card(modifier = Modifier.padding(6.dp),
                     shape = CutCornerShape(6.dp)) {
-                LazyColumn() {
-                    semestersToShow.forEach { semester ->
-                        item {
-                            Text(
-                                text = "Semestar $semester",
-                                modifier = Modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.titleMedium
-                            )
-                        }
-                        items(studyProgram?.subjects?.filter { it.semester == semester }
-                            ?: emptyList()
-                        ) { subject ->
-                            //items(studyProgram?.subjects?.count() ?: 0) { subject ->
-                            //studyProgram?.subjects?.forEach { subject ->
-                            Row(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
+                    LazyColumn() {
+                        semestersToShow.forEach { semester ->
+                            item {
                                 Text(
-                                    text = subject.code,
-                                    modifier = Modifier.weight(1f),
-                                    textAlign = TextAlign.Center
+                                    text = "Semestar $semester",
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.titleMedium
                                 )
-                                Text(
-                                    text = subject.name,
-                                    modifier = Modifier.weight(2f).clickable() {},
-                                    color = MaterialTheme.colorScheme.primary,
-                                    textAlign = TextAlign.Left
-                                )
-                                Text(
-                                    text = "${subject.status ?: 0}",
-                                    modifier = Modifier.weight(1f),
-                                    textAlign = TextAlign.Center
-                                )
-                                Text(
-                                    text = "${subject.espb}",
-                                    modifier = Modifier.weight(1f),
-                                    textAlign = TextAlign.Center
-                                )
-                                //Text(text = "${subject.numLessons ?: 0}")
-                                //Text(text = "${subject.numPractice ?: 0}")
-                                //Text(text = "${subject.numDon ?: 0}")
-                                //Text(text = "${subject.numRest ?: 0}")
+                            }
+                            items(studyProgram?.subjects?.filter { it.semester == semester && it.optionalBlockId == null }
+                                ?: emptyList()
+                            ) { subject ->
+                                //items(studyProgram?.subjects?.count() ?: 0) { subject ->
+                                //studyProgram?.subjects?.forEach { subject ->
+                                Row(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
+                                    Text(
+                                        text = subject.code,
+                                        modifier = Modifier.weight(1f),
+                                        textAlign = TextAlign.Center
+                                    )
+                                    Text(
+                                        text = subject.name,
+                                        modifier = Modifier.weight(2f).clickable() {},
+                                        color = MaterialTheme.colorScheme.primary,
+                                        textAlign = TextAlign.Left
+                                    )
+                                    Text(
+                                        text = "${subject.status ?: 0}",
+                                        modifier = Modifier.weight(1f),
+                                        textAlign = TextAlign.Center
+                                    )
+                                    Text(
+                                        text = "${subject.espb}",
+                                        modifier = Modifier.weight(1f),
+                                        textAlign = TextAlign.Center
+                                    )
+                                }
+
+                            }
+                            studyProgram?.optionalBlocks
+                                ?.filter { block ->
+                                    studyProgram!!.subjects.any {
+                                        it.optionalBlockId == block.id &&
+                                                it.semester == semester
+                                    }
+                                }
+                                ?.forEach { block ->
+                                    val subjectsInBlock =
+                                        studyProgram!!.subjects.filter {
+                                            it.optionalBlockId == block.id &&
+                                                    it.semester == semester
+                                        }
+                                    item {
+                                        Text(
+                                            text = "Izborni blok ${block.blockNumber}",
+                                            modifier = Modifier.fillMaxWidth(),
+                                            style = MaterialTheme.typography.titleMedium,
+                                            textAlign = TextAlign.Center
+                                        )
+                                        Text(
+                                            text = "Odaberite ${block.numberOfSubjetsToChoose} od ${subjectsInBlock.size}",
+                                            modifier = Modifier.fillMaxWidth(),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            textAlign = TextAlign.Center
+                                        )
+                                    }
+                                items(subjectsInBlock) { subject ->
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(2.dp)
+                                    ) {
+                                        Text(
+                                            text = subject.code,
+                                            modifier = Modifier.weight(1f),
+                                            textAlign = TextAlign.Center
+                                        )
+                                        Text(
+                                            text = subject.name,
+                                            modifier = Modifier
+                                                .weight(2f)
+                                                .clickable { },
+                                            color = MaterialTheme.colorScheme.primary
+                                        )
+                                        Text(
+                                            text = subject.status ?: "",
+                                            modifier = Modifier.weight(1f),
+                                            textAlign = TextAlign.Center
+                                        )
+                                        Text(
+                                            text = "${subject.espb}",
+                                            modifier = Modifier.weight(1f),
+                                            textAlign = TextAlign.Center
+                                        )
+                                    }
+                                }
                             }
                         }
+                        //Text(text = "${subject.numLessons ?: 0}")
+                        //Text(text = "${subject.numPractice ?: 0}")
+                        //Text(text = "${subject.numDon ?: 0}")
+                        //Text(text = "${subject.numRest ?: 0}")
+
+
                     }
-                }
 //                    item {
 //                        Text(
 //                            text = "Semestar ${selectedYear.times(2)}",

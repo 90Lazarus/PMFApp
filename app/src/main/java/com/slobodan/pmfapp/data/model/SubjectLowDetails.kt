@@ -15,6 +15,9 @@ data class SubjectLowDetails(
     @ColumnInfo(name = "status")
     val status: String?,
 
+    @ColumnInfo(name = "izborni_blok_id")
+    val optionalBlockId: Int?,
+
     @ColumnInfo(name = "semestar")
     val semester: Int,
 

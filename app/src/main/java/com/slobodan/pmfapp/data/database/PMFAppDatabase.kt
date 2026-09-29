@@ -10,11 +10,12 @@ import com.slobodan.pmfapp.data.dao.StudyProgramDao
 import com.slobodan.pmfapp.data.dao.SubjectDao
 import com.slobodan.pmfapp.data.entity.DegreeLevelEntity
 import com.slobodan.pmfapp.data.entity.DepartmentEntity
+import com.slobodan.pmfapp.data.entity.OptionalBlockEntity
 import com.slobodan.pmfapp.data.entity.StudyProgramEntity
 import com.slobodan.pmfapp.data.entity.SubjectEntity
 
 @Database(
-    entities = [DegreeLevelEntity::class, DepartmentEntity::class, StudyProgramEntity::class, SubjectEntity::class],
+    entities = [DegreeLevelEntity::class, DepartmentEntity::class, StudyProgramEntity::class, SubjectEntity::class, OptionalBlockEntity::class],
     version = 1,
     exportSchema = false
 )
