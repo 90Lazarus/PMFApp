@@ -1,10 +1,6 @@
 package com.slobodan.pmfapp.data.model
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
-import androidx.room.Relation
-import com.slobodan.pmfapp.data.entity.StudyProgramEntity
-import com.slobodan.pmfapp.data.entity.SubjectEntity
 
 data class SubjectLowDetails(
     @ColumnInfo(name = "id")
@@ -16,9 +12,27 @@ data class SubjectLowDetails(
     @ColumnInfo(name = "naziv")
     val name: String,
 
+    @ColumnInfo(name = "status")
+    val status: String?,
+
     @ColumnInfo(name = "semestar")
     val semester: Int,
 
     @ColumnInfo(name = "espb")
-    val espb: Int
+    val espb: Int,
+
+    @ColumnInfo(name = "br_predavanja")
+    val numLessons: Int?,
+
+    @ColumnInfo(name = "br_vezbe")
+    val numPractice: Int?,
+
+    @ColumnInfo(name = "br_don")
+    val numDon: Int?,
+
+    @ColumnInfo(name = "br_ostalo")
+    val numRest: Int?
+
+//    @ColumnInfo(name = "studijski_program_id")
+//    val studyProgramId: Int
 )

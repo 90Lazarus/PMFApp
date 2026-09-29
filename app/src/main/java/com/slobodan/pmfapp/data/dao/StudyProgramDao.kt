@@ -6,6 +6,7 @@ import androidx.room.Transaction
 import com.slobodan.pmfapp.data.entity.StudyProgramEntity
 import com.slobodan.pmfapp.data.model.StudyProgram
 import com.slobodan.pmfapp.data.model.StudyProgramWithDetails
+import com.slobodan.pmfapp.data.model.StudyProgramWithDetailsWithSubjects
 import com.slobodan.pmfapp.data.model.StudyProgramWithSubjects
 
 @Dao
@@ -20,4 +21,8 @@ interface StudyProgramDao {
 
     @Query("SELECT * FROM studijski_programi WHERE naziv = :name")
     suspend fun getStudyProgramByName(name: String): StudyProgramEntity?
+
+    @Transaction
+    @Query("SELECT * FROM studijski_programi WHERE naziv = :name")
+    suspend fun getStudyProgramAll(name: String): StudyProgramWithDetailsWithSubjects?
 }
