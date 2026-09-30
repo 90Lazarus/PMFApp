@@ -75,14 +75,15 @@ fun StudyProgramsScreen(
                 Text(text = "Prirodno-matematički fakultet u Nišu", textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineSmall)
             }
 
-            Spacer(modifier = Modifier.height(6.dp))
+            //Spacer(modifier = Modifier.height(6.dp))
 
             Image(
+                modifier = Modifier.padding(6.dp),
                 painter = painterResource(R.drawable.pmf_front),
-                contentDescription = "University photo"
+                contentDescription = "University photo",
             )
 
-            Spacer(modifier = Modifier.height(6.dp))
+            //Spacer(modifier = Modifier.height(6.dp))
 
             Column(
                 modifier = Modifier.fillMaxSize().padding(6.dp),
@@ -92,26 +93,26 @@ fun StudyProgramsScreen(
                 Image(
                     painter = painterResource(id = image),
                     contentDescription = null,
-                    modifier = Modifier.fillMaxWidth().padding(6.dp),
+                    modifier = Modifier.fillMaxWidth().weight(1f).padding(6.dp),
                     contentScale = ContentScale.Fit
                 )
 
-                Spacer(modifier = Modifier.height(6.dp))
+                //Spacer(modifier = Modifier.height(6.dp))
 
                 Row(
                     modifier = Modifier.padding(6.dp),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                        )
-                    }
+//                    IconButton(onClick = onBackClick) {
+//                        Icon(
+//                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+//                            contentDescription = "Back",
+//                        )
+//                    }
                     Text("Odaberite studijski program:", style = MaterialTheme.typography.titleMedium)
                 }
 
-                Spacer(modifier = Modifier.height(6.dp))
+                //Spacer(modifier = Modifier.height(6.dp))
 
                 programs?.forEach { program ->
                     Button(

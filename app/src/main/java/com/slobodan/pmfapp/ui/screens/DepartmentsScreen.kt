@@ -86,14 +86,15 @@ fun DepartmentsScreen(
                 Text(text = "Prirodno-matematički fakultet u Nišu", textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineSmall)
             }
 
-            Spacer(modifier = Modifier.height(6.dp))
+            //Spacer(modifier = Modifier.height(6.dp))
 
             Image(
+                modifier = Modifier.padding(6.dp),
                 painter = painterResource(R.drawable.pmf_front),
                 contentDescription = "University photo"
             )
 
-            Spacer(modifier = Modifier.height(6.dp))
+            //Spacer(modifier = Modifier.height(6.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -113,7 +114,7 @@ fun DepartmentsScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(6.dp))
+            //Spacer(modifier = Modifier.height(6.dp))
 
             Column(
                 modifier = Modifier.fillMaxSize().padding(6.dp),
@@ -125,50 +126,58 @@ fun DepartmentsScreen(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                        )
-                    }
+//                    IconButton(onClick = onBackClick) {
+//                        Icon(
+//                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+//                            contentDescription = "Back",
+//                        )
+//                    }
                     Text(text="Odaberite departman:", style = MaterialTheme.typography.titleMedium)
                 }
+                Department.entries.forEach { department ->
+                    Button(
+                        onClick = { onDepartmentSelected(department) },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(text = department.displayName)
+                    }
+                }
 
-                Button(
-                    onClick = { onDepartmentSelected(Department.BIO) },
-                    modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = Department.BIO.displayName) }
-                )
-
-                Button(
-                    onClick = { onDepartmentSelected(Department.GEO) },
-                    modifier = Modifier.fillMaxWidth(),
-                    content ={ Text(text = Department.GEO.displayName) }
-                )
-
-                Button(
-                    onClick = { onDepartmentSelected(Department.MATH) },
-                    modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = Department.MATH.displayName) }
-                )
-
-                Button(
-                    onClick = { onDepartmentSelected(Department.CS) },
-                    modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = Department.CS.displayName) }
-                )
-
-                Button(
-                    onClick = { onDepartmentSelected(Department.PHY) },
-                    modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = Department.PHY.displayName) }
-                )
-
-                Button(
-                    onClick = { onDepartmentSelected(Department.CHE) },
-                    modifier = Modifier.fillMaxWidth(),
-                    content = { Text(text = Department.CHE.displayName) }
-                )
+//                Button(
+//                    onClick = { onDepartmentSelected(Department.BIO) },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    content = { Text(text = Department.BIO.displayName) }
+//                )
+//
+//                Button(
+//                    onClick = { onDepartmentSelected(Department.GEO) },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    content ={ Text(text = Department.GEO.displayName) }
+//                )
+//
+//                Button(
+//                    onClick = { onDepartmentSelected(Department.MATH) },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    content = { Text(text = Department.MATH.displayName) }
+//                )
+//
+//                Button(
+//                    onClick = { onDepartmentSelected(Department.CS) },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    content = { Text(text = Department.CS.displayName) }
+//                )
+//
+//                Button(
+//                    onClick = { onDepartmentSelected(Department.PHY) },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    content = { Text(text = Department.PHY.displayName) }
+//                )
+//
+//                Button(
+//                    onClick = { onDepartmentSelected(Department.CHE) },
+//                    modifier = Modifier.fillMaxWidth(),
+//                    content = { Text(text = Department.CHE.displayName) }
+//                )
             }
         }
     }
