@@ -18,7 +18,7 @@ import androidx.room.PrimaryKey
             entity = OptionalBlockEntity::class,
             parentColumns = ["id"],
             childColumns = ["izborni_blok_id"]
-        ),
+        )
     ])
 data class SubjectEntity(
     @PrimaryKey

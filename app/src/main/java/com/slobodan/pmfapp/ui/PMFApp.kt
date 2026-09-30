@@ -17,13 +17,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.slobodan.pmfapp.data.model.DegreeLevel
 import com.slobodan.pmfapp.data.model.Department
-import com.slobodan.pmfapp.data.model.StudyProgram
 import com.slobodan.pmfapp.data.model.StudyPrograms
 import com.slobodan.pmfapp.navigation.PMFAppScreens
 import com.slobodan.pmfapp.ui.screens.DegreeLevelsScreen
 import com.slobodan.pmfapp.ui.screens.DepartmentsScreen
 import com.slobodan.pmfapp.ui.screens.ProgramScreen
 import com.slobodan.pmfapp.ui.screens.StudyProgramsScreen
+import com.slobodan.pmfapp.ui.screens.SubjectScreen
 
 @Composable
 fun PMFApp() {
@@ -32,6 +32,7 @@ fun PMFApp() {
     val selectedDepartment = remember { mutableStateOf<Department?>(null) }
     val selectedProgram = remember { mutableStateOf<StudyPrograms?>(null) }
     val selectedProgramId = remember { mutableStateOf<Int?>(null) }
+    val selectedSubjectId = remember { mutableStateOf<Int?>(null) }
 
     Scaffold(
         bottomBar = {
@@ -96,6 +97,18 @@ fun PMFApp() {
             composable(route = PMFAppScreens.PROGRAM_SCREEN.name) {
                 ProgramScreen(
                     selectedProgram = selectedProgram.value!!,
+                    onSubjectSelected = { subjectId ->
+                        selectedSubjectId.value = subjectId
+                        navController.navigate(PMFAppScreens.SUBJECT_SCREEN.name)
+                    },
+                    onBackClick = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+            composable(route = PMFAppScreens.SUBJECT_SCREEN.name) {
+                SubjectScreen(
+                    subjectId = selectedSubjectId.value!!,
                     onBackClick = {
                         navController.popBackStack()
                     }

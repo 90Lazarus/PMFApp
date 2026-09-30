@@ -6,19 +6,6 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
-//@Entity
-//data class StudyProgramEntity(
-//    @PrimaryKey
-//    val id: Int,
-//    val name: String,
-//    val nameEn: String,
-//    val degreeLevelId: Int,
-//    val departmentId: Int,
-//    val duration: Int,
-//    val espb: Int,
-//    val accreditationYear: Int
-//)
-
 @Entity(tableName = "studijski_programi",
     indices = [Index("stepen_studija_id"), Index("departman_id")],
     foreignKeys = [

@@ -4,14 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-//@Entity
-//data class DegreeLevelEntity(
-//    @PrimaryKey
-//    val id: Int,
-//    val name: String,
-//    val nameEn: String
-//)
-
 @Entity(tableName = "stepeni_studija")
 data class DegreeLevelEntity(
     @PrimaryKey

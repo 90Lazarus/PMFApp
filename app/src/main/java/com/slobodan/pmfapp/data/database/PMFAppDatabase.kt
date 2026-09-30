@@ -27,7 +27,6 @@ abstract class PMFAppDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var instance: PMFAppDatabase? = null
-
         fun getDatabase(context: Context): PMFAppDatabase {
             return instance ?: synchronized(this) {
                 Room.databaseBuilder(

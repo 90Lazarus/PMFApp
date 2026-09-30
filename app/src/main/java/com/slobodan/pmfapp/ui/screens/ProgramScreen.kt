@@ -1,5 +1,6 @@
 package com.slobodan.pmfapp.ui.screens
 
+import android.R.attr.onClick
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,15 +44,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.slobodan.pmfapp.data.entity.SubjectEntity
 import com.slobodan.pmfapp.data.model.StudyPrograms
+import com.slobodan.pmfapp.data.model.SubjectLowDetails
 import com.slobodan.pmfapp.viewmodel.StudyProgramViewModel
 import org.w3c.dom.Text
 
 @Composable
 fun ProgramScreen(
     selectedProgram: StudyPrograms,
-    viewModel: StudyProgramViewModel = viewModel(factory = StudyProgramViewModel.Factory),
-    onBackClick: () -> Unit
+    onSubjectSelected: (Int) -> Unit,
+    onBackClick: () -> Unit,
+    viewModel: StudyProgramViewModel = viewModel(factory = StudyProgramViewModel.Factory)
 ) {
     LaunchedEffect(selectedProgram) {
         viewModel.loadStudyProgram(selectedProgram)
@@ -137,7 +141,7 @@ fun ProgramScreen(
                                 ?: "No entries in the database!",
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.ExtraBold
                         )
                     }
                 }
@@ -273,7 +277,7 @@ fun ProgramScreen(
                 shape = CutCornerShape(6.dp)
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(6.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
@@ -296,7 +300,7 @@ fun ProgramScreen(
                     )
                     Text(
                         text = "ESPB",
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(0.5f),
                         style = MaterialTheme.typography.labelMedium,
                         textAlign = TextAlign.Center
                     )
@@ -306,12 +310,49 @@ fun ProgramScreen(
                     shape = CutCornerShape(6.dp)) {
                     LazyColumn() {
                         semestersToShow.forEach { semester ->
+
+                            val subjectsInSemester = studyProgram!!.subjects.filter {
+                                it.semester == semester
+                            }
+                            val mandatorySubjects = subjectsInSemester.filter {
+                                it.optionalBlockId == null
+                            }
+                            val mandatoryCount = mandatorySubjects.size
+                            val mandatoryEspb = mandatorySubjects.sumOf {
+                                it.espb
+                            }
+                            val optionalCount = studyProgram!!.optionalBlocks
+                                .filter { block ->
+                                    subjectsInSemester.any {
+                                        it.optionalBlockId == block.id
+                                    }
+                                }
+                                .sumOf { block ->
+                                    block.numberOfSubjetsToChoose
+                                }
+                            val optionalEspb = studyProgram!!.optionalBlocks
+                                .filter { block ->
+                                    subjectsInSemester.any {
+                                        it.optionalBlockId == block.id
+                                    }
+                                }
+                                .sumOf { block ->
+                                    val exampleSubject = subjectsInSemester.first {
+                                        it.optionalBlockId == block.id
+                                    }
+
+                                    exampleSubject.espb * block.numberOfSubjetsToChoose
+                                }
+                            val totalSubjects = mandatoryCount + optionalCount
+                            val totalEspb = mandatoryEspb + optionalEspb
+
                             item {
                                 Text(
-                                    text = "Semestar $semester",
+                                    text = "Semestar $semester:",
                                     modifier = Modifier.fillMaxWidth(),
                                     textAlign = TextAlign.Center,
-                                    style = MaterialTheme.typography.titleMedium
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold
                                 )
                             }
                             items(studyProgram?.subjects?.filter { it.semester == semester && it.optionalBlockId == null }
@@ -319,15 +360,15 @@ fun ProgramScreen(
                             ) { subject ->
                                 //items(studyProgram?.subjects?.count() ?: 0) { subject ->
                                 //studyProgram?.subjects?.forEach { subject ->
-                                Row(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
+                                Row(modifier = Modifier.fillMaxWidth().padding(3.dp)) {
                                     Text(
                                         text = subject.code,
                                         modifier = Modifier.weight(1f),
-                                        textAlign = TextAlign.Center
+                                        textAlign = TextAlign.Left
                                     )
                                     Text(
                                         text = subject.name,
-                                        modifier = Modifier.weight(2f).clickable() {},
+                                        modifier = Modifier.weight(2f).clickable() { onSubjectSelected(subject.id)},
                                         color = MaterialTheme.colorScheme.primary,
                                         textAlign = TextAlign.Left
                                     )
@@ -338,56 +379,48 @@ fun ProgramScreen(
                                     )
                                     Text(
                                         text = "${subject.espb}",
-                                        modifier = Modifier.weight(1f),
+                                        modifier = Modifier.weight(0.5f),
                                         textAlign = TextAlign.Center
                                     )
                                 }
 
                             }
-                            studyProgram?.optionalBlocks
-                                ?.filter { block ->
-                                    studyProgram!!.subjects.any {
-                                        it.optionalBlockId == block.id &&
-                                                it.semester == semester
-                                    }
+                            studyProgram?.optionalBlocks?.filter {
+                                block -> studyProgram!!.subjects.any {
+                                    it.optionalBlockId == block.id && it.semester == semester
                                 }
+                            }
                                 ?.forEach { block ->
-                                    val subjectsInBlock =
-                                        studyProgram!!.subjects.filter {
-                                            it.optionalBlockId == block.id &&
-                                                    it.semester == semester
+                                    val subjectsInBlock = studyProgram!!.subjects.filter {
+                                        it.optionalBlockId == block.id && it.semester == semester
                                         }
                                     item {
                                         Text(
-                                            text = "Izborni blok ${block.blockNumber}",
+                                            text = "Izborni blok ${block.blockNumber} (bira se ${block.numberOfSubjetsToChoose} od ${subjectsInBlock.size} predemeta)",
                                             modifier = Modifier.fillMaxWidth(),
-                                            style = MaterialTheme.typography.titleMedium,
+                                            style = MaterialTheme.typography.titleSmall,
                                             textAlign = TextAlign.Center
                                         )
-                                        Text(
-                                            text = "Odaberite ${block.numberOfSubjetsToChoose} od ${subjectsInBlock.size}",
-                                            modifier = Modifier.fillMaxWidth(),
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            textAlign = TextAlign.Center
-                                        )
+//                                        Text(
+//                                            text = "Bira se ${block.numberOfSubjetsToChoose} od ${subjectsInBlock.size} predemeta",
+//                                            modifier = Modifier.fillMaxWidth(),
+//                                            style = MaterialTheme.typography.bodyMedium,
+//                                            textAlign = TextAlign.Center
+//                                        )
                                     }
                                 items(subjectsInBlock) { subject ->
-                                    Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(2.dp)
+                                    Row(modifier = Modifier.fillMaxWidth().padding(3.dp)
                                     ) {
                                         Text(
                                             text = subject.code,
                                             modifier = Modifier.weight(1f),
-                                            textAlign = TextAlign.Center
+                                            textAlign = TextAlign.Left
                                         )
                                         Text(
                                             text = subject.name,
-                                            modifier = Modifier
-                                                .weight(2f)
-                                                .clickable { },
-                                            color = MaterialTheme.colorScheme.primary
+                                            modifier = Modifier.weight(2f).clickable { onSubjectSelected(subject.id) },
+                                            color = MaterialTheme.colorScheme.primary,
+                                            textAlign = TextAlign.Left
                                         )
                                         Text(
                                             text = subject.status ?: "",
@@ -396,19 +429,81 @@ fun ProgramScreen(
                                         )
                                         Text(
                                             text = "${subject.espb}",
-                                            modifier = Modifier.weight(1f),
+                                            modifier = Modifier.weight(0.5f),
                                             textAlign = TextAlign.Center
                                         )
                                     }
                                 }
                             }
+                            item(
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth().padding(6.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        text = "Ukupan broj predmeta: $totalSubjects",
+                                        modifier = Modifier.weight(1f),
+                                        style = MaterialTheme.typography.labelMedium,
+                                        textAlign = TextAlign.Left
+                                    )
+                                    Text(
+                                        text = "Ukupan broj ESPB: $totalEspb",
+                                        modifier = Modifier.weight(1f),
+                                        style = MaterialTheme.typography.labelMedium,
+                                        textAlign = TextAlign.Right
+                                    )
+                                }
+                            }
+
                         }
-                        //Text(text = "${subject.numLessons ?: 0}")
-                        //Text(text = "${subject.numPractice ?: 0}")
-                        //Text(text = "${subject.numDon ?: 0}")
-                        //Text(text = "${subject.numRest ?: 0}")
+                        val subjectsInYear = studyProgram!!.subjects.filter {
+                            it.semester in semestersToShow
+                        }
+                        val mandatorySubjectsInYear = subjectsInYear.filter {
+                            it.optionalBlockId == null
+                        }
+                        val mandatoryCount2 = mandatorySubjectsInYear.size
+                        val mandatoryEspb2 = mandatorySubjectsInYear.sumOf {
+                            it.espb
+                        }
+                        val optionalBlocksInYear = studyProgram!!.optionalBlocks.filter { block ->
+                            subjectsInYear.any {
+                                it.optionalBlockId == block.id
+                            }
+                        }
+                        val optionalCount2 = optionalBlocksInYear.sumOf {
+                            it.numberOfSubjetsToChoose
+                        }
+                        val optionalEspb2 = optionalBlocksInYear.sumOf { block ->
 
+                            val subject = subjectsInYear.first {
+                                it.optionalBlockId == block.id
+                            }
 
+                            subject.espb * block.numberOfSubjetsToChoose
+                        }
+                        val totalSubjectsYear = mandatoryCount2 + optionalCount2
+                        val totalEspbYear = mandatoryEspb2 + optionalEspb2
+                        item {
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(6.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "Sveukupno predmeta: $totalSubjectsYear",
+                                    modifier = Modifier.weight(1f),
+                                    textAlign = TextAlign.Left,
+                                    style = MaterialTheme.typography.labelLarge
+                                )
+                                Text(
+                                    text = "Sveukupno ESPB: $totalEspbYear",
+                                    modifier = Modifier.weight(1f),
+                                    textAlign = TextAlign.Right,
+                                    style = MaterialTheme.typography.labelLarge
+                                )
+                            }
+                        }
                     }
 //                    item {
 //                        Text(

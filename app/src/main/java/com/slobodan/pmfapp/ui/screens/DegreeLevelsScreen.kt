@@ -28,18 +28,18 @@ fun DegreeLevelsScreen(
     onDegreeSelected: (DegreeLevel) -> Unit
 ) {
     Surface(
-        modifier = Modifier.padding(12.dp),
-        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier.padding(6.dp),
+        shape = RoundedCornerShape(6.dp),
         tonalElevation = 4.dp,
         //border = BorderStroke(width = 1.dp, color = Color.Magenta)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(12.dp),
+            modifier = Modifier.fillMaxSize().padding(6.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
             Row(
-                modifier = Modifier.padding(12.dp),
+                modifier = Modifier.padding(6.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -50,7 +50,7 @@ fun DegreeLevelsScreen(
                 Text(text = "Prirodno-matematički fakultet u Nišu", textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineSmall)
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Image(
                 painter = painterResource(R.drawable.pmf_front),
@@ -60,13 +60,13 @@ fun DegreeLevelsScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             Column(
-                modifier = Modifier.fillMaxSize().padding(24.dp),
+                modifier = Modifier.fillMaxSize().padding(6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
                 Text(text = "Odaberite nivo studija:", style = MaterialTheme.typography.titleMedium)
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(6.dp))
 
                 Button(
                     onClick = { onDegreeSelected(DegreeLevel.BACHELORS) },

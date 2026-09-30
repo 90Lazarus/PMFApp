@@ -9,6 +9,13 @@ import com.slobodan.pmfapp.data.model.SubjectWithDetails
 
 @Dao
 interface SubjectDao {
+    @Query("SELECT * FROM predmeti WHERE id = :id")
+    suspend fun getSubject(id: Int): SubjectEntity
+
+    @Transaction
+    @Query("SELECT * FROM predmeti WHERE id = :id")
+    suspend fun getSubjectByIdWithDetails(id: Int): SubjectWithDetails
+
     @Transaction
     @Query("SELECT * FROM predmeti")
     suspend fun getSubjectsWithDetails(): List<SubjectWithDetails>

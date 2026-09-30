@@ -2,6 +2,7 @@ package com.slobodan.pmfapp.data.repository
 
 import com.slobodan.pmfapp.data.dao.SubjectDao
 import com.slobodan.pmfapp.data.entity.SubjectEntity
+import com.slobodan.pmfapp.data.model.SubjectWithDetails
 
 class SubjectRepository (private val subjectDao: SubjectDao) {
     suspend fun getSubjectsForStudyProgram(studyProgramId: Int): List<SubjectEntity> {
@@ -12,7 +13,7 @@ class SubjectRepository (private val subjectDao: SubjectDao) {
 
     }
 
-    suspend fun getSubjectDetails(subjectId: Int): SubjectEntity {
-        return subjectDao.getSubjectWithDetails(subjectId)
+    suspend fun getSubjectDetails(subjectId: Int): SubjectWithDetails {
+        return subjectDao.getSubjectByIdWithDetails(subjectId)
     }
 }

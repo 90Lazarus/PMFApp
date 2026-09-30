@@ -53,18 +53,18 @@ fun StudyProgramsScreen(
     }
 
     Surface(
-        modifier = Modifier.padding(12.dp),
-        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier.padding(6.dp),
+        shape = RoundedCornerShape(6.dp),
         tonalElevation = 4.dp,
         //border = BorderStroke(width = 1.dp, color = Color.Magenta)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(12.dp),
+            modifier = Modifier.fillMaxSize().padding(6.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
             Row(
-                modifier = Modifier.padding(12.dp),
+                modifier = Modifier.padding(6.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -75,31 +75,31 @@ fun StudyProgramsScreen(
                 Text(text = "Prirodno-matematički fakultet u Nišu", textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineSmall)
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Image(
                 painter = painterResource(R.drawable.pmf_front),
                 contentDescription = "University photo"
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Column(
-                modifier = Modifier.fillMaxSize().padding(24.dp),
+                modifier = Modifier.fillMaxSize().padding(6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
                 Image(
                     painter = painterResource(id = image),
                     contentDescription = null,
-                    modifier = Modifier.fillMaxWidth().weight(1f),
+                    modifier = Modifier.fillMaxWidth().padding(6.dp),
                     contentScale = ContentScale.Fit
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(6.dp))
 
                 Row(
-                    modifier = Modifier.padding(24.dp),
+                    modifier = Modifier.padding(6.dp),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically) {
                     IconButton(onClick = onBackClick) {
@@ -111,7 +111,7 @@ fun StudyProgramsScreen(
                     Text("Odaberite studijski program:", style = MaterialTheme.typography.titleMedium)
                 }
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(6.dp))
 
                 programs?.forEach { program ->
                     Button(

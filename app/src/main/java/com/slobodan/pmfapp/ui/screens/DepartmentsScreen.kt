@@ -4,15 +4,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -29,24 +34,48 @@ import com.slobodan.pmfapp.data.model.DegreeLevel
 import com.slobodan.pmfapp.data.model.Department
 
 @Composable
+fun RowScope.DegreeCard(
+    name: String,
+    selected: Boolean
+) {
+    Card(
+        modifier = Modifier.weight(1f).padding(6.dp),
+        shape = CutCornerShape(6.dp),
+        colors = CardDefaults.cardColors(
+            containerColor =
+                if (selected)
+                    MaterialTheme.colorScheme.primaryContainer
+                else
+                    MaterialTheme.colorScheme.surfaceVariant
+        )
+    ) {
+        Text(
+            text = name,
+            modifier = Modifier.fillMaxWidth().padding(6.dp),
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
 fun DepartmentsScreen(
     selectedDegree: DegreeLevel,
     onDepartmentSelected: (Department) -> Unit,
     onBackClick: () -> Unit,
 ) {
     Surface(
-        modifier = Modifier.padding(12.dp),
-        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier.padding(6.dp),
+        shape = RoundedCornerShape(6.dp),
         tonalElevation = 4.dp,
         //border = BorderStroke(width = 1.dp, color = Color.Magenta)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(12.dp),
+            modifier = Modifier.fillMaxSize().padding(6.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
             Row(
-                modifier = Modifier.padding(12.dp),
+                modifier = Modifier.padding(6.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -57,22 +86,42 @@ fun DepartmentsScreen(
                 Text(text = "Prirodno-matematički fakultet u Nišu", textAlign = TextAlign.Center, style = MaterialTheme.typography.headlineSmall)
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Image(
                 painter = painterResource(R.drawable.pmf_front),
                 contentDescription = "University photo"
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(6.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                DegreeCard(
+                    name = "OAS",
+                    selected = selectedDegree == DegreeLevel.BACHELORS
+                )
+                DegreeCard(
+                    name = "MAS",
+                    selected = selectedDegree == DegreeLevel.MASTERS
+                )
+                DegreeCard(
+                    name = "DAS",
+                    selected = selectedDegree == DegreeLevel.DOCTORS
+                )
+            }
+
+            Spacer(modifier = Modifier.height(6.dp))
 
             Column(
-                modifier = Modifier.fillMaxSize().padding(12.dp),
+                modifier = Modifier.fillMaxSize().padding(6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
                 Row(
-                    modifier = Modifier.padding(12.dp),
+                    modifier = Modifier.padding(6.dp),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
