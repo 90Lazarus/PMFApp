@@ -2,4 +2,21 @@
 <resources>
     <string name="app_name">PMFApp</string>
     <string name="choose_degree_level">Одаберите степен студија:</string>
+    <string name="osnovne_akademske_studije">Основне академске студије</string>
+    <string name="master_akademske_studije">Мастер академске студије</string>
+    <string name="doktorske_akademske_studije">Докторксе академске студије</string>
+    <string name="university_name">Универзитет у Нишу</string>
+    <string name="faculty_name">Природно‑математички факултет у Нишу</string>
+    <string name="faculty_logo_description">Лого факултета</string>
+    <string name="faculty_photo">Слика факултета</string>
+    <string name="biologija_i_ekologija">Биологија и екологија</string>
+    <string name="geografija_i_turizam">Географија и туризам</string>
+    <string name="matematika">Математика</string>
+    <string name="racunarske_nauke">Рачунарске науке</string>
+    <string name="fizika">Физика</string>
+    <string name="hemija">Хемија</string>
+    <string name="oas">ОАС</string>
+    <string name="mas">МАС</string>
+    <string name="das">ДАС</string>
+    <string name="odaberite_departman">Одаберите департман:</string>
 </resources>

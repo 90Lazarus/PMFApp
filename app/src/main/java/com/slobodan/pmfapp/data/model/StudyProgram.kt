@@ -1,6 +1,7 @@
 package com.slobodan.pmfapp.data.model
 
-import java.time.Year
+import com.slobodan.pmfapp.data.model.enums.DegreeLevel
+import com.slobodan.pmfapp.data.model.enums.Department
 
 //@Entity
 data class StudyProgram(

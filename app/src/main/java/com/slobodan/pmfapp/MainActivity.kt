@@ -35,8 +35,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PMFAppTheme {
+                PMFApp()
             }
-            PMFApp()
         }
 //        lifecycleScope.launch {
 //            val db = PMFAppDatabase.getDatabase(this@MainActivity)

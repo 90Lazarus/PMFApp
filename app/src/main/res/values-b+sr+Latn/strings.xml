@@ -2,4 +2,21 @@
 <resources>
     <string name="app_name">PMFApp</string>
     <string name="choose_degree_level">Odaberite stepen studija:</string>
+    <string name="osnovne_akademske_studije">Osnovne akademske studije</string>
+    <string name="master_akademske_studije">Master akademske studije</string>
+    <string name="doktorske_akademske_studije">Doktorske akademske studije</string>
+    <string name="university_name">Univerzitet u Nišu</string>
+    <string name="faculty_name">Prirodno‑matematički fakultet u Nišu</string>
+    <string name="faculty_logo_description">Logo fakulteta</string>
+    <string name="faculty_photo">Slika fakulteta</string>
+    <string name="biologija_i_ekologija">Biologija i ekologija</string>
+    <string name="geografija_i_turizam">Geografija i turizam</string>
+    <string name="matematika">Matematika</string>
+    <string name="racunarske_nauke">Računarske nauke</string>
+    <string name="fizika">Fizika</string>
+    <string name="hemija">Hemija</string>
+    <string name="oas">OAS</string>
+    <string name="mas">MAS</string>
+    <string name="das">DAS</string>
+    <string name="odaberite_departman">Odaberite departman:</string>
 </resources>

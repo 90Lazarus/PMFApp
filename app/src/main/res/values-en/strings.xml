@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PMFApp</string>
-    <string name="choose_degree_level">Choose degree level:</string>
+    <string name="choose_degree_level">Choose the degree level:</string>
+    <string name="osnovne_akademske_studije">Bachelor\'s</string>
+    <string name="master_akademske_studije">Master\'s</string>
+    <string name="doktorske_akademske_studije">Doctorate</string>
+    <string name="university_name">University of Niš</string>
+    <string name="faculty_name">Faculty of Sciences and Mathematics</string>
+    <string name="faculty_logo_description">Faculty logo</string>
+    <string name="faculty_photo">Faculty photo</string>
+    <string name="biologija_i_ekologija">" Biology and Ecology"</string>
+    <string name="geografija_i_turizam">Geography and Tourism</string>
+    <string name="matematika">Mathematics</string>
+    <string name="racunarske_nauke">Computer Sciences</string>
+    <string name="fizika">Physics</string>
+    <string name="hemija">Chemistry</string>
+    <string name="oas">B.Sc.</string>
+    <string name="mas">M.Sc.</string>
+    <string name="das">D.Sc.</string>
+    <string name="odaberite_departman">Choose the department:</string>
 </resources>

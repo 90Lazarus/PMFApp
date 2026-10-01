@@ -1,7 +1,7 @@
 package com.slobodan.pmfapp.data.source
 
-import com.slobodan.pmfapp.data.model.DegreeLevel
-import com.slobodan.pmfapp.data.model.Department
+import com.slobodan.pmfapp.data.model.enums.DegreeLevel
+import com.slobodan.pmfapp.data.model.enums.Department
 import com.slobodan.pmfapp.data.model.StudyProgram
 import com.slobodan.pmfapp.data.model.Subject
 

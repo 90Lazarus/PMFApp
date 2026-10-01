@@ -1,4 +1,4 @@
-package com.slobodan.pmfapp.data.model
+package com.slobodan.pmfapp.data.model.enums
 
 enum class StudyPrograms(val displayName: String, val dbName: String?) {
     //Biologija i ekologija

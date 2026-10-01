@@ -5,7 +5,7 @@ import com.slobodan.pmfapp.data.entity.StudyProgramEntity
 import com.slobodan.pmfapp.data.model.StudyProgramWithDetails
 import com.slobodan.pmfapp.data.model.StudyProgramWithDetailsWithSubjects
 import com.slobodan.pmfapp.data.model.StudyProgramWithSubjects
-import com.slobodan.pmfapp.data.model.StudyPrograms
+import com.slobodan.pmfapp.data.model.enums.StudyPrograms
 
 class StudyProgramRepository (private val studyProgramDao: StudyProgramDao) {
     suspend fun getStudyProgramsByDegreeIdAndDepartmentId(degreeLevelId: Int, departmentId: Int): List<StudyProgramWithDetails> {

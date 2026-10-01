@@ -11,32 +11,55 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
-
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+    primary = Color(0xFF3F6278),
     onPrimary = Color.White,
+    primaryContainer = Color(0xFFD0E4F0),
+    onPrimaryContainer = Color(0xFF0D1D26),
+
+    secondary = Color(0xFF536873),
     onSecondary = Color.White,
+    secondaryContainer = Color(0xFFD7E5EC),
+    onSecondaryContainer = Color(0xFF101C22),
+
+    tertiary = Color(0xFF756248),
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    tertiaryContainer = Color(0xFFF0DFCB),
+    onTertiaryContainer = Color(0xFF281A0D),
+
+    background = Color(0xFFF8FAFB),
+    onBackground = Color(0xFF191C1E),
+
+    surface = Color(0xFFF8FAFB),
+    onSurface = Color(0xFF191C1E),
+    surfaceVariant = Color(0xFFDCE4E8),
+    onSurfaceVariant = Color(0xFF40484D)
 )
 
-private val DarkColorScheme2 = darkColorScheme(
-    primary = Color(0xFF8B0000),
-    secondary = Color(0xFF0D2B45),
-    tertiary = Color(0xFFD9B44A)
+private val DarkColorScheme = darkColorScheme(
+    primary = Color(0xFFA7B0B5),
+    onPrimary = Color(0xFF111416),
+    primaryContainer = Color(0xFF3A4247),
+    onPrimaryContainer = Color(0xFFE1E5E7),
+
+    secondary = Color(0xFF71808A),
+    onSecondary = Color.White,
+    secondaryContainer = Color(0xFF344047),
+    onSecondaryContainer = Color(0xFFDCE3E7),
+
+    tertiary = Color(0xFF9A8060),
+    onTertiary = Color(0xFF15110C),
+    tertiaryContainer = Color(0xFF44382A),
+    onTertiaryContainer = Color(0xFFE8DCCB),
+
+    background = Color(0xFF0C1115),
+    onBackground = Color(0xFFE2E6E8),
+
+    surface = Color(0xFF151B20),
+    onSurface = Color(0xFFE2E6E8),
+
+    surfaceVariant = Color(0xFF252E34),
+    onSurfaceVariant = Color(0xFFC3CCD1)
 )
 
 @Composable
@@ -51,8 +74,7 @@ fun PMFAppTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
-        darkTheme -> DarkColorScheme2
+        darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
 

@@ -9,8 +9,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.slobodan.pmfapp.PMFApplication
-import com.slobodan.pmfapp.data.model.StudyProgramWithDetailsWithSubjects
-import com.slobodan.pmfapp.data.model.StudyPrograms
 import com.slobodan.pmfapp.data.model.SubjectWithDetails
 import com.slobodan.pmfapp.data.repository.SubjectRepository
 import kotlinx.coroutines.flow.MutableStateFlow
