@@ -83,4 +83,13 @@
     <string name="sp_odaberite_godinu">Одаберите годину:</string>
     <string name="sp_sve">Све</string>
     <string name="sp_sifra_predmeta">Шифра предмета</string>
+    <string name="sp_semestar">"Семестар "</string>
+    <string name="p_izborni_blok">Изборни блок</string>
+    <string name="p_bira_se">бира се</string>
+    <string name="p_od">од</string>
+    <string name="p_predmeta">предмета</string>
+    <string name="p_ukupan_broj_predmeta">Укупан број предмета</string>
+    <string name="p_ukupan_broj_espb">Укупан број ЕСПБ</string>
+    <string name="p_sveukupno_predmeta">Свеукупно предмета</string>
+    <string name="p_sveukupno_espb">Свеукупно ЕСПБ</string>
 </resources>

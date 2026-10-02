@@ -5,28 +5,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -39,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -144,37 +132,33 @@ fun ProgramScreen(
                         }
                     )
                 }
-//                    Text(text = "Šifra predmeta")
-//                    Text(text = "Naziv predmeta")
-//                    Text(text = "Tip predmeta")
-//                    Text(text = "ESPB")
+
                 Card(
                     modifier = Modifier.padding(4.dp),
                     shape = CutCornerShape(4.dp)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp),
+                    Row(modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = stringResource(R.string.sp_sifra_predmeta),
                             modifier = Modifier.weight(1f),
                             style = MaterialTheme.typography.labelMedium,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Left
                         )
                         Text(
                             text = stringResource(R.string.sub_info_naziv_predmeta),
-                            modifier = Modifier.weight(2f),
+                            modifier = Modifier.weight(2.5f),
                             style = MaterialTheme.typography.labelMedium,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Left
                         )
                         Text(
                             text = stringResource(R.string.sub_info_broj_espb),
                             modifier = Modifier.weight(0.5f),
                             style = MaterialTheme.typography.labelMedium,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Right
                         )
                     }
 
@@ -183,12 +167,9 @@ fun ProgramScreen(
                         shape = CutCornerShape(4.dp)
                     ) {
                         LazyColumn(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f)
+                            modifier = Modifier.fillMaxWidth().weight(1f)
                         ) {
                             semestersToShow.forEach { semester ->
-
                                 val subjectsInSemester = studyProgram!!.subjects.filter {
                                     it.semester == semester
                                 }
@@ -226,46 +207,44 @@ fun ProgramScreen(
 
                                 item {
                                     Text(
-                                        text = "Semestar $semester:",
+                                        text = "${stringResource(R.string.sp_semestar)} $semester",
                                         modifier = Modifier.fillMaxWidth(),
                                         textAlign = TextAlign.Center,
                                         style = MaterialTheme.typography.titleMedium,
                                         fontWeight = FontWeight.Bold
                                     )
                                 }
-                                items(studyProgram?.subjects?.filter { it.semester == semester && it.optionalBlockId == null }
-                                    ?: emptyList()
+                                items(studyProgram?.subjects?.filter {
+                                    it.semester == semester && it.optionalBlockId == null
+                                } ?: emptyList()
                                 ) { subject ->
-                                    //items(studyProgram?.subjects?.count() ?: 0) { subject ->
-                                    //studyProgram?.subjects?.forEach { subject ->
-                                    Row(modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(4.dp)) {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(4.dp)
+                                    ) {
                                         Text(
                                             text = subject.code,
                                             modifier = Modifier.weight(1f),
+                                            style = MaterialTheme.typography.titleMedium,
                                             textAlign = TextAlign.Left
                                         )
                                         Text(
                                             text = subject.name,
                                             modifier = Modifier
-                                                .weight(2f)
+                                                .weight(2.5f)
                                                 .clickable() { onSubjectSelected(subject.id) },
                                             color = MaterialTheme.colorScheme.primary,
+                                            style = MaterialTheme.typography.titleMedium,
                                             textAlign = TextAlign.Left
                                         )
-//                                        Text(
-//                                            text = "${subject.status ?: 0}",
-//                                            modifier = Modifier.weight(1f),
-//                                            textAlign = TextAlign.Center
-//                                        )
                                         Text(
                                             text = "${subject.espb}",
                                             modifier = Modifier.weight(0.5f),
-                                            textAlign = TextAlign.Center
+                                            style = MaterialTheme.typography.titleMedium,
+                                            textAlign = TextAlign.Right
                                         )
                                     }
-
                                 }
                                 studyProgram?.optionalBlocks?.filter { block ->
                                     studyProgram!!.subjects.any {
@@ -273,22 +252,25 @@ fun ProgramScreen(
                                     }
                                 }
                                     ?.forEach { block ->
-                                        val subjectsInBlock = studyProgram!!.subjects.filter {
-                                            it.optionalBlockId == block.id && it.semester == semester
-                                        }
+                                        val subjectsInBlock =
+                                            studyProgram!!.subjects.filter {
+                                                it.optionalBlockId == block.id && it.semester == semester
+                                            }
                                         item {
                                             Text(
-                                                text = "Izborni blok ${block.blockNumber} (bira se ${block.numberOfSubjetsToChoose} od ${subjectsInBlock.size} predemeta)",
+                                                text = "${stringResource(R.string.p_izborni_blok)} ${block.blockNumber} (${
+                                                    stringResource(
+                                                        R.string.p_bira_se
+                                                    )
+                                                } ${block.numberOfSubjetsToChoose} ${
+                                                    stringResource(
+                                                        R.string.p_od
+                                                    )
+                                                } ${subjectsInBlock.size} ${stringResource(R.string.p_predmeta)})",
                                                 modifier = Modifier.fillMaxWidth(),
                                                 style = MaterialTheme.typography.titleSmall,
                                                 textAlign = TextAlign.Center
                                             )
-//                                        Text(
-//                                            text = "Bira se ${block.numberOfSubjetsToChoose} od ${subjectsInBlock.size} predemeta",
-//                                            modifier = Modifier.fillMaxWidth(),
-//                                            style = MaterialTheme.typography.bodyMedium,
-//                                            textAlign = TextAlign.Center
-//                                        )
                                         }
                                         items(subjectsInBlock) { subject ->
                                             Row(
@@ -299,24 +281,26 @@ fun ProgramScreen(
                                                 Text(
                                                     text = subject.code,
                                                     modifier = Modifier.weight(1f),
+                                                    style = MaterialTheme.typography.titleMedium,
                                                     textAlign = TextAlign.Left
                                                 )
                                                 Text(
                                                     text = subject.name,
                                                     modifier = Modifier
-                                                        .weight(2f)
-                                                        .clickable { onSubjectSelected(subject.id) },
+                                                        .weight(2.5f)
+                                                        .clickable {
+                                                            onSubjectSelected(
+                                                                subject.id
+                                                            )
+                                                        },
                                                     color = MaterialTheme.colorScheme.primary,
+                                                    style = MaterialTheme.typography.titleMedium,
                                                     textAlign = TextAlign.Left
-                                                )
-                                                Text(
-                                                    text = subject.status ?: "",
-                                                    modifier = Modifier.weight(1f),
-                                                    textAlign = TextAlign.Center
                                                 )
                                                 Text(
                                                     text = "${subject.espb}",
                                                     modifier = Modifier.weight(0.5f),
+                                                    style = MaterialTheme.typography.titleMedium,
                                                     textAlign = TextAlign.Center
                                                 )
                                             }
@@ -331,20 +315,19 @@ fun ProgramScreen(
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Text(
-                                            text = "Ukupan broj predmeta: $totalSubjects",
+                                            text = "${stringResource(R.string.p_ukupan_broj_predmeta)}: $totalSubjects",
                                             modifier = Modifier.weight(1f),
                                             style = MaterialTheme.typography.labelMedium,
                                             textAlign = TextAlign.Left
                                         )
                                         Text(
-                                            text = "Ukupan broj ESPB: $totalEspb",
+                                            text = "${stringResource(R.string.p_ukupan_broj_espb)}: $totalEspb",
                                             modifier = Modifier.weight(1f),
                                             style = MaterialTheme.typography.labelMedium,
                                             textAlign = TextAlign.Right
                                         )
                                     }
                                 }
-
                             }
                             val subjectsInYear = studyProgram!!.subjects.filter {
                                 it.semester in semestersToShow
@@ -366,30 +349,29 @@ fun ProgramScreen(
                                 it.numberOfSubjetsToChoose
                             }
                             val optionalEspb2 = optionalBlocksInYear.sumOf { block ->
-
                                 val subject = subjectsInYear.first {
                                     it.optionalBlockId == block.id
                                 }
-
                                 subject.espb * block.numberOfSubjetsToChoose
                             }
                             val totalSubjectsYear = mandatoryCount2 + optionalCount2
                             val totalEspbYear = mandatoryEspb2 + optionalEspb2
+
                             item {
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(6.dp),
+                                        .padding(4.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
-                                        text = "Sveukupno predmeta: $totalSubjectsYear",
+                                        text = "${stringResource(R.string.p_sveukupno_predmeta)}: $totalSubjectsYear",
                                         modifier = Modifier.weight(1f),
                                         textAlign = TextAlign.Left,
                                         style = MaterialTheme.typography.labelLarge
                                     )
                                     Text(
-                                        text = "Sveukupno ESPB: $totalEspbYear",
+                                        text = "${stringResource(R.string.p_sveukupno_espb)}: $totalEspbYear",
                                         modifier = Modifier.weight(1f),
                                         textAlign = TextAlign.Right,
                                         style = MaterialTheme.typography.labelLarge
@@ -397,45 +379,6 @@ fun ProgramScreen(
                                 }
                             }
                         }
-//                    item {
-//                        Text(
-//                            text = "Semestar ${selectedYear.times(2)}",
-//                            modifier = Modifier.fillMaxWidth(),
-//                            textAlign = TextAlign.Center,
-//                            style = MaterialTheme.typography.titleMedium
-//                        )
-//                    }
-//                    items(subjectsForYear) { subject ->
-//                        //items(studyProgram?.subjects?.count() ?: 0) { subject ->
-//                        //studyProgram?.subjects?.forEach { subject ->
-//                        Row(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
-//                            Text(
-//                                text = subject.code,
-//                                modifier = Modifier.weight(1f),
-//                                textAlign = TextAlign.Center
-//                            )
-//                            Text(
-//                                text = subject.name,
-//                                modifier = Modifier.weight(2f).clickable() {},
-//                                color = MaterialTheme.colorScheme.primary,
-//                                textAlign = TextAlign.Center
-//                            )
-//                            Text(
-//                                text = "${subject.status ?: 0}",
-//                                modifier = Modifier.weight(1f),
-//                                textAlign = TextAlign.Center
-//                            )
-//                            Text(
-//                                text = "${subject.espb}",
-//                                modifier = Modifier.weight(1f),
-//                                textAlign = TextAlign.Center
-//                            )
-//                            //Text(text = "${subject.numLessons ?: 0}")
-//                            //Text(text = "${subject.numPractice ?: 0}")
-//                            //Text(text = "${subject.numDon ?: 0}")
-//                            //Text(text = "${subject.numRest ?: 0}")
-//                        }
-//                    }
                     }
                 }
             }
