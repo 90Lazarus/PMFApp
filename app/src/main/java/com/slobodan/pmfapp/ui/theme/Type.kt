@@ -22,9 +22,9 @@ import androidx.compose.ui.unit.sp
 
 val Typography = Typography().run {
     copy(
-        labelSmall = labelSmall.copy(fontFamily = FontFamily.Monospace),
-        labelMedium = labelMedium.copy(fontFamily = FontFamily.Monospace),
-        labelLarge = labelLarge.copy(fontFamily = FontFamily.Monospace),
+        labelSmall = labelSmall.copy(fontFamily = FontFamily.Default),
+        labelMedium = labelMedium.copy(fontFamily = FontFamily.Default),
+        labelLarge = labelLarge.copy(fontFamily = FontFamily.Default),
         headlineSmall = headlineSmall.copy(fontFamily = FontFamily.Default),
         headlineMedium = headlineMedium.copy(fontFamily = FontFamily.Default),
         headlineLarge = headlineLarge.copy(fontFamily = FontFamily.Default),
