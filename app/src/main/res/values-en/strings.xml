@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PMFApp</string>
-    <string name="choose_degree_level">Choose the degree level:</string>
+    <string name="choose_degree_level">Choose a degree level:</string>
     <string name="osnovne_akademske_studije">Bachelor\'s</string>
     <string name="master_akademske_studije">Master\'s</string>
     <string name="doktorske_akademske_studije">Doctorate</string>
@@ -9,7 +9,7 @@
     <string name="faculty_name">Faculty of Sciences and Mathematics</string>
     <string name="faculty_logo_description">Faculty logo</string>
     <string name="faculty_photo">Faculty photo</string>
-    <string name="biologija_i_ekologija">" Biology and Ecology"</string>
+    <string name="biologija_i_ekologija">Biology and Ecology</string>
     <string name="geografija_i_turizam">Geography and Tourism</string>
     <string name="matematika">Mathematics</string>
     <string name="racunarske_nauke">Computer Sciences</string>
@@ -18,5 +18,36 @@
     <string name="oas">B.Sc.</string>
     <string name="mas">M.Sc.</string>
     <string name="das">D.Sc.</string>
-    <string name="odaberite_departman">Choose the department:</string>
+    <string name="odaberite_departman">Choose a department:</string>
+    <string name="b_cs_rn">Computer Science</string>
+    <string name="m_cs_vimu">Artificial Intelligence and Machine Learning</string>
+    <string name="m_cs_rs">Software Development</string>
+    <string name="m_cs_ui">Information Management</string>
+    <string name="d_cd_rn">Computer Science</string>
+    <string name="b_bio_b">Biology</string>
+    <string name="m_bio_b">Biology</string>
+    <string name="m_bio_ezp">Ecology and Nature Conservation</string>
+    <string name="m_bio_mbf">Molecular Biology and Physiology</string>
+    <string name="d_bio_b">Biology</string>
+    <string name="b_geo_g">Geography</string>
+    <string name="m_geo_g">Geography</string>
+    <string name="m_geo_t">Tourism</string>
+    <string name="d_geo_g">Geosciences</string>
+    <string name="b_phy_f">Physics</string>
+    <string name="m_phy_epf">Experimental and Applied Physics</string>
+    <string name="m_phy_nf">Physics Education</string>
+    <string name="m_phy_tfp">Theoretical Physics and Applications</string>
+    <string name="d_phy_f">Physics</string>
+    <string name="b_che_h">Chemistry</string>
+    <string name="m_che_ph">Chemistry Teacher</string>
+    <string name="m_che_i">Research</string>
+    <string name="m_che_phom">Applied Chemistry with Fundamentals of Management</string>
+    <string name="d_che_h">Chemistry</string>
+    <string name="b_math_m">Mathematics</string>
+    <string name="b_math_om">General Mathematics</string>
+    <string name="m_math_pm">Mathematics Teacher</string>
+    <string name="m_math_pm2">Applied Mathematics</string>
+    <string name="m_math_vsfm">Probability, Statistics and Financial Mathematics</string>
+    <string name="d_math_m">Mathematics</string>
+    <string name="odaberite_studijski_program">Choose a study program:</string>
 </resources>

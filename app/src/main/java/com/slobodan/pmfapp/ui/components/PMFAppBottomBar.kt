@@ -60,7 +60,7 @@ fun PMFAppBottomBar (
                 )
             }
             IconButton(
-                onClick = onClickAction,
+                onClick = {},
                 modifier = Modifier.align(Alignment.CenterEnd)
             ) {
                 Icon(
