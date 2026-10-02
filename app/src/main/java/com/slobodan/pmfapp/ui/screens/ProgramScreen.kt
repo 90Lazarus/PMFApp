@@ -1,5 +1,6 @@
 package com.slobodan.pmfapp.ui.screens
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,6 +24,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -38,11 +40,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.slobodan.pmfapp.R
 import com.slobodan.pmfapp.data.model.enums.StudyPrograms
+import com.slobodan.pmfapp.ui.components.StudyProgramHeaderRow
 import com.slobodan.pmfapp.viewmodel.StudyProgramViewModel
 
 @Composable
@@ -52,6 +58,9 @@ fun ProgramScreen(
     onBackClick: () -> Unit,
     viewModel: StudyProgramViewModel = viewModel(factory = StudyProgramViewModel.Factory)
 ) {
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
     LaunchedEffect(selectedProgram) {
         viewModel.loadStudyProgram(selectedProgram)
     }
@@ -76,244 +85,93 @@ fun ProgramScreen(
             //border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.primary)
         ) {
             Column(
-                modifier = Modifier.fillMaxSize().padding(4.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Card(
-                        modifier = Modifier.weight(1f).fillMaxHeight().padding(4.dp),
-                        shape = CutCornerShape(4.dp)
+                if(!isLandscape) {
+                    StudyProgramHeaderRow(
+                        leftLabel = stringResource(R.string.sp_stepen_studija),
+                        leftValue = studyProgram?.degreeLevel?.name,
+                        rightLabel = stringResource(R.string.sp_departman),
+                        rightValue = studyProgram?.department?.name
                     )
-                    {
-                        Column(
-                            modifier = Modifier.fillMaxWidth().padding(4.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Top
-                        ) {
-                            Text(
-                                text = "Stepen studija:",
-                                style = MaterialTheme.typography.labelSmall,
-                                textAlign = TextAlign.Center
-                            )
-                            Text(
-                                text = "${studyProgram?.degreeLevel?.name}",
-                                style = MaterialTheme.typography.labelLarge,
-                                fontWeight = FontWeight.Bold,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    }
-                    Card(modifier = Modifier.weight(1f).fillMaxHeight().padding(4.dp),
-                        shape = CutCornerShape(4.dp))
-                    {
-                        Column(
-                            modifier = Modifier.fillMaxWidth().padding(4.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Top
-                        ) {
-                            Text(text = "Departman:", style = MaterialTheme.typography.labelSmall)
-                            Text(
-                                text = "${studyProgram?.department?.name}",
-                                style = MaterialTheme.typography.labelLarge,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
+                    StudyProgramHeaderRow(
+                        leftLabel = stringResource(R.string.sp_naziv_programa),
+                        leftValue = studyProgram?.studyProgram?.name
+                            ?: "No entries in the database!",
+                        leftValueStyle = MaterialTheme.typography.headlineSmall,
+                        leftWeight = 3f,
+                        leftContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                        rightLabel = stringResource(R.string.sp_godina_akreditacije),
+                        rightValue = studyProgram?.studyProgram?.accreditationYear?.toString(),
+                        rightWeight = 1f
+                    )
+                    StudyProgramHeaderRow(
+                        leftLabel = stringResource(R.string.sp_godine_trajanja),
+                        leftValue = studyProgram?.studyProgram?.duration?.toString(),
+                        rightLabel = stringResource(R.string.sp_ukupan_broj_espb_bodova),
+                        rightValue = studyProgram?.studyProgram?.espb?.toString()
+                    )
                 }
-                //Text(text = selectedProgram.displayName)
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Card(
-                        modifier = Modifier.padding(4.dp),
-                        shape = CutCornerShape(4.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(4.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Top
-                        ) {
-                            Text(
-                                text = "Naziv programa:",
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                            Text(
-                                text = studyProgram?.studyProgram?.name
-                                    ?: "No entries in the database!",
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.headlineSmall,
-                                fontWeight = FontWeight.ExtraBold
-                            )
-                        }
-                    }
-                    Card(
-                        modifier = Modifier.padding(4.dp),
-                        shape = CutCornerShape(4.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(4.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Top
-                        ) {
-                            Text(
-                                text = "Godina akreditacije:", textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                            Text(
-                                text = "${studyProgram?.studyProgram?.accreditationYear}",
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
-                }
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Card(
-                        modifier = Modifier.weight(1f).padding(4.dp),
-                        shape = CutCornerShape(4.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth().padding(4.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Top
-                        ) {
-                            Text(
-                                text = "Godine trajanja:",
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                            Text(
-                                text = "${studyProgram?.studyProgram?.duration}",
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
-                    Card(
-                        modifier = Modifier.weight(1f).padding(4.dp),
-                        shape = CutCornerShape(4.dp)
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth().padding(4.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.Top
-                        ) {
-                            Text(
-                                text = "Ukupan broj ESPB bodova:",
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                            Text(
-                                text = "${studyProgram?.studyProgram?.espb}",
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                    }
-                }
-
-                Text(
-                    text = "Odaberite godinu:",
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleMedium
-                )
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                        )
-                    }
-                    Button(
-                        //modifier = Modifier.weight(1f),
-                        //contentPadding = PaddingValues(0.dp),
-                        onClick = { selectedYear = 0 },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (selectedYear == 0)
-                                MaterialTheme.colorScheme.primary
-                            else MaterialTheme.colorScheme.surfaceVariant
-                        )
-                    ) { Text(text = "Sve") }
-                    //Row(
-                    //    modifier = Modifier.weight(1f)
-                    //) {
+                    Text(
+                        text = stringResource(R.string.sp_odaberite_godinu),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleMedium
+                    )
                     for (i in 1..((studyProgram?.studyProgram?.duration) ?: 0)) {
-                        Button(
-                            //    modifier = Modifier.weight(1f),
-                            //contentPadding = PaddingValues(0.dp),
+                        FilterChip(
+                            selected = selectedYear == i,
                             onClick = { selectedYear = i },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (selectedYear == i)
-                                    MaterialTheme.colorScheme.primary
-                                else MaterialTheme.colorScheme.surfaceVariant
-                            )
-                        ) {
-                            //Box(
-                            //    modifier = Modifier.fillMaxWidth(),
-                            //    contentAlignment = Alignment.Center
-                            //) {
-                            Text(text = "$i")
-                        }
+                            label = {
+                                Text(text = "$i")
+                            }
+                        )
                     }
+                    FilterChip(
+                        selected = selectedYear == 0,
+                        onClick = { selectedYear = 0 },
+                        label = {
+                            Text(text = stringResource(R.string.sp_sve))
+                        }
+                    )
                 }
-                //}
-
-//                Row(
-//                    modifier = Modifier.padding(12.dp).fillMaxWidth(),
-//                    //.border(border = BorderStroke(2.dp, Color.Blue)),
-//                    horizontalArrangement = Arrangement.SpaceBetween,
-//                    //verticalAlignment = Alignment.CenterVertically
-//                ) {
 //                    Text(text = "Šifra predmeta")
 //                    Text(text = "Naziv predmeta")
 //                    Text(text = "Tip predmeta")
 //                    Text(text = "ESPB")
-//                }
                 Card(
                     modifier = Modifier.padding(4.dp),
                     shape = CutCornerShape(4.dp)
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(4.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Šifra predmeta",
+                            text = stringResource(R.string.sp_sifra_predmeta),
                             modifier = Modifier.weight(1f),
                             style = MaterialTheme.typography.labelMedium,
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            text = "Naziv predmeta",
+                            text = stringResource(R.string.sub_info_naziv_predmeta),
                             modifier = Modifier.weight(2f),
                             style = MaterialTheme.typography.labelMedium,
                             textAlign = TextAlign.Center
                         )
                         Text(
-                            text = "Tip predmeta",
-                            modifier = Modifier.weight(1f),
-                            style = MaterialTheme.typography.labelMedium,
-                            textAlign = TextAlign.Center
-                        )
-                        Text(
-                            text = "ESPB",
+                            text = stringResource(R.string.sub_info_broj_espb),
                             modifier = Modifier.weight(0.5f),
                             style = MaterialTheme.typography.labelMedium,
                             textAlign = TextAlign.Center
@@ -325,7 +183,9 @@ fun ProgramScreen(
                         shape = CutCornerShape(4.dp)
                     ) {
                         LazyColumn(
-                            modifier = Modifier.fillMaxWidth().weight(1f)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
                         ) {
                             semestersToShow.forEach { semester ->
 
@@ -378,7 +238,9 @@ fun ProgramScreen(
                                 ) { subject ->
                                     //items(studyProgram?.subjects?.count() ?: 0) { subject ->
                                     //studyProgram?.subjects?.forEach { subject ->
-                                    Row(modifier = Modifier.fillMaxWidth().padding(4.dp)) {
+                                    Row(modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(4.dp)) {
                                         Text(
                                             text = subject.code,
                                             modifier = Modifier.weight(1f),
@@ -386,16 +248,17 @@ fun ProgramScreen(
                                         )
                                         Text(
                                             text = subject.name,
-                                            modifier = Modifier.weight(2f)
+                                            modifier = Modifier
+                                                .weight(2f)
                                                 .clickable() { onSubjectSelected(subject.id) },
                                             color = MaterialTheme.colorScheme.primary,
                                             textAlign = TextAlign.Left
                                         )
-                                        Text(
-                                            text = "${subject.status ?: 0}",
-                                            modifier = Modifier.weight(1f),
-                                            textAlign = TextAlign.Center
-                                        )
+//                                        Text(
+//                                            text = "${subject.status ?: 0}",
+//                                            modifier = Modifier.weight(1f),
+//                                            textAlign = TextAlign.Center
+//                                        )
                                         Text(
                                             text = "${subject.espb}",
                                             modifier = Modifier.weight(0.5f),
@@ -429,7 +292,9 @@ fun ProgramScreen(
                                         }
                                         items(subjectsInBlock) { subject ->
                                             Row(
-                                                modifier = Modifier.fillMaxWidth().padding(4.dp)
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(4.dp)
                                             ) {
                                                 Text(
                                                     text = subject.code,
@@ -438,7 +303,8 @@ fun ProgramScreen(
                                                 )
                                                 Text(
                                                     text = subject.name,
-                                                    modifier = Modifier.weight(2f)
+                                                    modifier = Modifier
+                                                        .weight(2f)
                                                         .clickable { onSubjectSelected(subject.id) },
                                                     color = MaterialTheme.colorScheme.primary,
                                                     textAlign = TextAlign.Left
@@ -459,7 +325,9 @@ fun ProgramScreen(
                                 item(
                                 ) {
                                     Row(
-                                        modifier = Modifier.fillMaxWidth().padding(4.dp),
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(4.dp),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Text(
@@ -509,7 +377,9 @@ fun ProgramScreen(
                             val totalEspbYear = mandatoryEspb2 + optionalEspb2
                             item {
                                 Row(
-                                    modifier = Modifier.fillMaxWidth().padding(6.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(6.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(

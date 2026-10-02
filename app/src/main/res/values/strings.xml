@@ -74,4 +74,13 @@
     <string name="sub_info_pismeni">Писмени</string>
     <string name="sub_info_usmeni">Усмени</string>
     <string name="sub_info_max_br_poena">Макс. бр. поена</string>
+    <string name="sp_stepen_studija">Степен студија</string>
+    <string name="sp_departman">Департман</string>
+    <string name="sp_godine_trajanja">Године трајања</string>
+    <string name="sp_ukupan_broj_espb_bodova">Укупан број ЕСПБ</string>
+    <string name="sp_naziv_programa">Назив програма</string>
+    <string name="sp_godina_akreditacije">Година акредитације</string>
+    <string name="sp_odaberite_godinu">Одаберите годину:</string>
+    <string name="sp_sve">Све</string>
+    <string name="sp_sifra_predmeta">Шифра предмета</string>
 </resources>

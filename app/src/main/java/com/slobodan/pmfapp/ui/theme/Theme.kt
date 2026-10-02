@@ -37,29 +37,29 @@ private val LightColorScheme = lightColorScheme(
 )
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFFA7B0B5),
-    onPrimary = Color(0xFF111416),
-    primaryContainer = Color(0xFF3A4247),
-    onPrimaryContainer = Color(0xFFE1E5E7),
+    primary = Color(0xFFC2CBD0),
+    onPrimary = Color(0xFF161A1D),
+    primaryContainer = Color(0xFF4B565D),
+    onPrimaryContainer = Color(0xFFF0F3F4),
 
-    secondary = Color(0xFF71808A),
-    onSecondary = Color.White,
-    secondaryContainer = Color(0xFF344047),
-    onSecondaryContainer = Color(0xFFDCE3E7),
+    secondary = Color(0xFF8C9BA4),
+    onSecondary = Color(0xFF151A1D),
+    secondaryContainer = Color(0xFF46545C),
+    onSecondaryContainer = Color(0xFFE4EAED),
 
-    tertiary = Color(0xFF9A8060),
-    onTertiary = Color(0xFF15110C),
-    tertiaryContainer = Color(0xFF44382A),
-    onTertiaryContainer = Color(0xFFE8DCCB),
+    tertiary = Color(0xFFB49A78),
+    onTertiary = Color(0xFF1D1710),
+    tertiaryContainer = Color(0xFF5A4935),
+    onTertiaryContainer = Color(0xFFF0E4D4),
 
-    background = Color(0xFF0C1115),
-    onBackground = Color(0xFFE2E6E8),
+    background = Color(0xFF12181D),
+    onBackground = Color(0xFFE8ECEE),
 
-    surface = Color(0xFF151B20),
-    onSurface = Color(0xFFE2E6E8),
+    surface = Color(0xFF1C242A),
+    onSurface = Color(0xFFE8ECEE),
 
-    surfaceVariant = Color(0xFF252E34),
-    onSurfaceVariant = Color(0xFFC3CCD1)
+    surfaceVariant = Color(0xFF303B42),
+    onSurfaceVariant = Color(0xFFD0D8DC)
 )
 
 @Composable
