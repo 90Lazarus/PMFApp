@@ -26,13 +26,13 @@ fun SubjectInfoItem(
             text = buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
-                        fontSize = MaterialTheme.typography.labelMedium.fontSize,
+                        fontSize = MaterialTheme.typography.titleMedium.fontSize,
                         fontWeight = FontWeight.Bold
                     )
                 ) { append("$label: ") }
                 withStyle(
                     style = SpanStyle(
-                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                        fontSize = MaterialTheme.typography.titleSmall.fontSize,
                         fontWeight = FontWeight.Medium
                     )
                 ) { append(value ?: "0") }

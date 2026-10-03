@@ -11,63 +11,35 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.slobodan.pmfapp.R
 
 @Composable
 fun PMFAppBottomBar (
-    onClickAction: () -> Unit
+    onHomeClick: () -> Unit,
+    onInfoClick: () -> Unit
 ) {
-//    NavigationBar(
-//        modifier = Modifier.height(56.dp)
-//    ) {
-//        IconButton(onClick = onClickAction) {
-//            Icon(Icons.Default.Home, "Početna")
-//        }
-//    }
-//    NavigationBar(
-//        //modifier = Modifier.height(54.dp)
-//    ) {
-//        NavigationBarItem(
-//            selected = false,
-//            onClick = {
-//                onClickAction()
-//            },
-//            icon = {
-//                Icon(
-//                    imageVector = Icons.Default.Home,
-//                    contentDescription = "Početna"
-//                )
-//            },
-//            label = {
-//                Text("Početna", style = MaterialTheme.typography.labelSmall)
-//            }
-//        )
-//    }
-    //Surface(
-    //    tonalElevation = 4.dp
-    //) {
-        Box(
-            modifier = Modifier.fillMaxWidth().padding(2.dp),
-            //horizontalArrangement = Arrangement.Center
+    Box(
+        modifier = Modifier.fillMaxWidth().padding(4.dp)
+    ) {
+        IconButton(
+            onClick = onHomeClick,
+            modifier = Modifier.align(Alignment.Center)
         ) {
-            IconButton(
-                onClick = onClickAction,
-                modifier = Modifier.align(Alignment.Center)
-            ) {
-                Icon(
-                    Icons.Default.Home,
-                    contentDescription = "Početna"
-                )
-            }
-            IconButton(
-                onClick = {},
-                modifier = Modifier.align(Alignment.CenterEnd)
-            ) {
-                Icon(
-                    Icons.Default.Info,
-                    contentDescription = "Informacije"
-                )
-            }
-
+            Icon(
+                imageVector = Icons.Default.Home,
+                contentDescription = stringResource(R.string.dsc_pocetna)
+            )
         }
+        IconButton(
+            onClick = onInfoClick,
+            modifier = Modifier.align(Alignment.CenterEnd)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Info,
+                contentDescription = stringResource(R.string.dsc_informacije)
+            )
+        }
+    }
 }

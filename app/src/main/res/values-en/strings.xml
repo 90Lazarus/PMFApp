@@ -92,4 +92,23 @@
     <string name="p_ukupan_broj_espb">Semester ESPB</string>
     <string name="p_sveukupno_predmeta">Total Subjects</string>
     <string name="p_sveukupno_espb">Total ESPB</string>
+    <string name="name_short">FSM Niš</string>
+    <string name="lng_latin">Srpski (latinica)</string>
+    <string name="lng_english">English</string>
+    <string name="lng_cyrilic">Српски (ћирилица)</string>
+    <string name="dsc_sajt_fakulteta">Faculty Website</string>
+    <string name="dsc_jezik">App Language</string>
+    <string name="dsc_pmf_logo">Faculty Logo</string>
+    <string name="dsc_back">Back</string>
+    <string name="dsc_pocetna">Home Page</string>
+    <string name="dsc_informacije">Information</string>
+    <string name="kontakt_i_informacije">Contact and Information</string>
+    <string name="l_adresa_fakulteta">Faculty Address</string>
+    <string name="inf_telefon_fakulteta">Faculty Phone Number</string>
+    <string name="inf_fax">Fax</string>
+    <string name="inf_pib">TIN</string>
+    <string name="inf_broj_racuna">Bank Account Number</string>
+    <string name="inf_email">Email Address</string>
+    <string name="inf_facebook">Facebook</string>
+    <string name="inf_instagram">Instagram</string>
 </resources>

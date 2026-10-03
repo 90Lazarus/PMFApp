@@ -21,6 +21,7 @@ import com.slobodan.pmfapp.ui.components.PMFAppBottomBar
 import com.slobodan.pmfapp.ui.components.PMFTopAppBar
 import com.slobodan.pmfapp.ui.screens.DegreeLevelsScreen
 import com.slobodan.pmfapp.ui.screens.DepartmentsScreen
+import com.slobodan.pmfapp.ui.screens.InformationScreen
 import com.slobodan.pmfapp.ui.screens.ProgramScreen
 import com.slobodan.pmfapp.ui.screens.StudyProgramsScreen
 import com.slobodan.pmfapp.ui.screens.SubjectScreen
@@ -32,30 +33,29 @@ fun PMFApp() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    //val selectedDegree = remember { mutableStateOf<DegreeLevel?>(null) }
     var selectedDegreeName by rememberSaveable { mutableStateOf<String?>(null) }
     val selectedDegree = selectedDegreeName?.let { DegreeLevel.valueOf(it) }
-    //val selectedDepartment = remember { mutableStateOf<Department?>(null) }
     var selectedDepartmentName by rememberSaveable { mutableStateOf<String?>(null) }
     val selectedDepartment = selectedDepartmentName?.let { Department.valueOf(it) }
-    //val selectedProgram = remember { mutableStateOf<StudyPrograms?>(null) }
     var selectedProgramName by rememberSaveable { mutableStateOf<String?>(null) }
     val selectedProgram = selectedProgramName?.let { StudyPrograms.valueOf(it) }
-    var selectedProgramId by rememberSaveable { mutableStateOf<Int?>(null) }
-    //val selectedSubjectId = remember { mutableStateOf<Int?>(null) }
+    //var selectedProgramId by rememberSaveable { mutableStateOf<Int?>(null) }
     var selectedSubjectId by rememberSaveable { mutableStateOf<Int?>(null) }
 
     Scaffold(
         bottomBar = {
             PMFAppBottomBar(
-                onClickAction = {
-                    navController.navigate(PMFAppScreens.DEGREE_LEVELS_SCREEN.name
+                onHomeClick = {
+                    navController.navigate(
+                        route = PMFAppScreens.DEGREE_LEVELS_SCREEN.name
                     ) {
-                        popUpTo(PMFAppScreens.DEGREE_LEVELS_SCREEN.name
-                        ) {
-                            inclusive = true
-                        }
+                        popUpTo(
+                            route = PMFAppScreens.DEGREE_LEVELS_SCREEN.name
+                        ) { inclusive = true }
                     }
+                },
+                onInfoClick = {
+                    navController.navigate(route = PMFAppScreens.INFORMATION_SCREEN.name)
                 }
             )
         },
@@ -127,6 +127,9 @@ fun PMFApp() {
                         }
                     )
                 }
+            }
+            composable(route = PMFAppScreens.INFORMATION_SCREEN.name) {
+                InformationScreen()
             }
         }
     }

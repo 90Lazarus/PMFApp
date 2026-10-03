@@ -92,4 +92,23 @@
     <string name="p_ukupan_broj_espb">Укупан број ЕСПБ</string>
     <string name="p_sveukupno_predmeta">Свеукупно предмета</string>
     <string name="p_sveukupno_espb">Свеукупно ЕСПБ</string>
+    <string name="name_short">ПМФ Ниш</string>
+    <string name="lng_latin">Srpski (latinica)</string>
+    <string name="lng_english">English</string>
+    <string name="lng_cyrilic">Српски (ћирилица)</string>
+    <string name="dsc_sajt_fakulteta">Сајт факултета</string>
+    <string name="dsc_jezik">Језик апликације</string>
+    <string name="dsc_pmf_logo">ПМФ лого</string>
+    <string name="dsc_back">Назад</string>
+    <string name="dsc_pocetna">Почетна страна</string>
+    <string name="dsc_informacije">Информације</string>
+    <string name="kontakt_i_informacije">Контакт и информације</string>
+    <string name="l_adresa_fakulteta">Адреса факултета</string>
+    <string name="inf_telefon_fakulteta">Телефон факултета</string>
+    <string name="inf_fax">Факс</string>
+    <string name="inf_pib">ПИБ</string>
+    <string name="inf_broj_racuna">Број жиро рачуна</string>
+    <string name="inf_email">Адреса електронске поште</string>
+    <string name="inf_facebook">Facebook</string>
+    <string name="inf_instagram">Instagram</string>
 </resources>

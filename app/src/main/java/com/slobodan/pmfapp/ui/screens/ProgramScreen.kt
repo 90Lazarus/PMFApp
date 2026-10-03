@@ -9,11 +9,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
@@ -135,11 +137,10 @@ fun ProgramScreen(
 
                 Card(
                     modifier = Modifier.padding(4.dp),
-                    shape = CutCornerShape(4.dp)
+                    shape = CutCornerShape(4.dp),
                 ) {
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(4.dp),
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
@@ -161,15 +162,15 @@ fun ProgramScreen(
                             textAlign = TextAlign.Right
                         )
                     }
-
                     Card(
-                        modifier = Modifier.padding(4.dp),
-                        shape = CutCornerShape(4.dp)
+                        //modifier = Modifier.padding(4.dp),
+                        shape = CutCornerShape(4.dp),
+                        //colors = CardDefaults.cardColors(MaterialTheme.colorScheme.onSurfaceVariant)
                     ) {
                         LazyColumn(
                             modifier = Modifier.fillMaxWidth().weight(1f)
                         ) {
-                            semestersToShow.forEach { semester ->
+                            items(semestersToShow.toList()) { semester ->
                                 val subjectsInSemester = studyProgram!!.subjects.filter {
                                     it.semester == semester
                                 }
@@ -180,32 +181,32 @@ fun ProgramScreen(
                                 val mandatoryEspb = mandatorySubjects.sumOf {
                                     it.espb
                                 }
-                                val optionalCount = studyProgram!!.optionalBlocks
-                                    .filter { block ->
-                                        subjectsInSemester.any {
-                                            it.optionalBlockId == block.id
-                                        }
+                                val optionalBlocksInSemester = studyProgram!!.optionalBlocks.filter {
+                                    block -> subjectsInSemester.any {
+                                        it.optionalBlockId == block.id
                                     }
-                                    .sumOf { block ->
-                                        block.numberOfSubjetsToChoose
-                                    }
-                                val optionalEspb = studyProgram!!.optionalBlocks
-                                    .filter { block ->
-                                        subjectsInSemester.any {
-                                            it.optionalBlockId == block.id
-                                        }
-                                    }
+                                }
+                                val optionalCount = optionalBlocksInSemester.sumOf {
+                                    it.numberOfSubjetsToChoose
+                                }
+                                val optionalEspb = optionalBlocksInSemester
                                     .sumOf { block ->
                                         val exampleSubject = subjectsInSemester.first {
                                             it.optionalBlockId == block.id
                                         }
-
                                         exampleSubject.espb * block.numberOfSubjetsToChoose
                                     }
                                 val totalSubjects = mandatoryCount + optionalCount
                                 val totalEspb = mandatoryEspb + optionalEspb
 
-                                item {
+                                Card(
+                                    modifier = Modifier.fillMaxWidth().padding(4.dp),
+                                    shape = CutCornerShape(4.dp),
+                                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
+                                ) {
+                                    Column(
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
                                     Text(
                                         text = "${stringResource(R.string.sp_semestar)} $semester",
                                         modifier = Modifier.fillMaxWidth(),
@@ -213,15 +214,10 @@ fun ProgramScreen(
                                         style = MaterialTheme.typography.titleMedium,
                                         fontWeight = FontWeight.Bold
                                     )
-                                }
-                                items(studyProgram?.subjects?.filter {
-                                    it.semester == semester && it.optionalBlockId == null
-                                } ?: emptyList()
-                                ) { subject ->
+
+                                mandatorySubjects.forEach { subject ->
                                     Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(4.dp)
+                                        modifier = Modifier.fillMaxWidth().padding(4.dp)
                                     ) {
                                         Text(
                                             text = subject.code,
@@ -231,10 +227,8 @@ fun ProgramScreen(
                                         )
                                         Text(
                                             text = subject.name,
-                                            modifier = Modifier
-                                                .weight(2.5f)
-                                                .clickable() { onSubjectSelected(subject.id) },
-                                            color = MaterialTheme.colorScheme.primary,
+                                            modifier = Modifier.weight(2.5f).clickable { onSubjectSelected(subject.id) },
+                                            color = MaterialTheme.colorScheme.tertiary,
                                             style = MaterialTheme.typography.titleMedium,
                                             textAlign = TextAlign.Left
                                         )
@@ -246,37 +240,22 @@ fun ProgramScreen(
                                         )
                                     }
                                 }
-                                studyProgram?.optionalBlocks?.filter { block ->
-                                    studyProgram!!.subjects.any {
-                                        it.optionalBlockId == block.id && it.semester == semester
-                                    }
-                                }
-                                    ?.forEach { block ->
+                                optionalBlocksInSemester.forEach { block ->
                                         val subjectsInBlock =
-                                            studyProgram!!.subjects.filter {
-                                                it.optionalBlockId == block.id && it.semester == semester
+                                            subjectsInSemester.filter {
+                                                it.optionalBlockId == block.id
                                             }
-                                        item {
+
                                             Text(
-                                                text = "${stringResource(R.string.p_izborni_blok)} ${block.blockNumber} (${
-                                                    stringResource(
-                                                        R.string.p_bira_se
-                                                    )
-                                                } ${block.numberOfSubjetsToChoose} ${
-                                                    stringResource(
-                                                        R.string.p_od
-                                                    )
-                                                } ${subjectsInBlock.size} ${stringResource(R.string.p_predmeta)})",
+                                                text = "${stringResource(R.string.p_izborni_blok)} ${block.blockNumber} (${stringResource(R.string.p_bira_se)} ${block.numberOfSubjetsToChoose} ${stringResource(R.string.p_od)} ${subjectsInBlock.size} ${stringResource(R.string.p_predmeta)})",
                                                 modifier = Modifier.fillMaxWidth(),
                                                 style = MaterialTheme.typography.titleSmall,
                                                 textAlign = TextAlign.Center
                                             )
-                                        }
-                                        items(subjectsInBlock) { subject ->
+
+                                        subjectsInBlock.forEach { subject ->
                                             Row(
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .padding(4.dp)
+                                                modifier = Modifier.fillMaxWidth().padding(4.dp)
                                             ) {
                                                 Text(
                                                     text = subject.code,
@@ -286,14 +265,8 @@ fun ProgramScreen(
                                                 )
                                                 Text(
                                                     text = subject.name,
-                                                    modifier = Modifier
-                                                        .weight(2.5f)
-                                                        .clickable {
-                                                            onSubjectSelected(
-                                                                subject.id
-                                                            )
-                                                        },
-                                                    color = MaterialTheme.colorScheme.primary,
+                                                    modifier = Modifier.weight(2.5f).clickable { onSubjectSelected(subject.id) },
+                                                    color = MaterialTheme.colorScheme.tertiary,
                                                     style = MaterialTheme.typography.titleMedium,
                                                     textAlign = TextAlign.Left
                                                 )
@@ -301,17 +274,13 @@ fun ProgramScreen(
                                                     text = "${subject.espb}",
                                                     modifier = Modifier.weight(0.5f),
                                                     style = MaterialTheme.typography.titleMedium,
-                                                    textAlign = TextAlign.Center
+                                                    textAlign = TextAlign.Right
                                                 )
                                             }
                                         }
                                     }
-                                item(
-                                ) {
                                     Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(4.dp),
+                                        modifier = Modifier.fillMaxWidth().padding(4.dp),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Text(
@@ -328,6 +297,7 @@ fun ProgramScreen(
                                         )
                                     }
                                 }
+                            }
                             }
                             val subjectsInYear = studyProgram!!.subjects.filter {
                                 it.semester in semestersToShow
@@ -359,9 +329,7 @@ fun ProgramScreen(
 
                             item {
                                 Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(4.dp),
+                                    modifier = Modifier.fillMaxWidth().padding(4.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(

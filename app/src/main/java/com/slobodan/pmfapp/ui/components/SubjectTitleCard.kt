@@ -34,7 +34,7 @@ fun SubjectTitleCard(
         ) {
             Text(
                 text = "$label:",
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
             )

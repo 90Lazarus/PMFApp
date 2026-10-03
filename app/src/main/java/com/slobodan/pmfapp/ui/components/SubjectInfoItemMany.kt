@@ -36,7 +36,7 @@ fun RowScope.SubjectInfoItemMany(
                     append("$label: \n")
                 }
                 withStyle(style = SpanStyle(
-                    fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                    fontSize = MaterialTheme.typography.labelSmall.fontSize,
                     fontWeight = FontWeight.Bold)) {
                     append((value?: 0).toString())
                 }
