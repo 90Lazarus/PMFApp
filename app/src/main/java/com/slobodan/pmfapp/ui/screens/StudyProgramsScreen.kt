@@ -38,7 +38,6 @@ fun StudyProgramsScreen(
     selectedDegree: DegreeLevel,
     selectedDepartment: Department,
     onStudyProgramSelected: (StudyPrograms) -> Unit,
-    onBackClick: () -> Unit,
     viewModel: StudyProgramViewModel = viewModel(factory = StudyProgramViewModel.Factory)
 ) {
     val programs = availablePrograms[selectedDegree to selectedDepartment]

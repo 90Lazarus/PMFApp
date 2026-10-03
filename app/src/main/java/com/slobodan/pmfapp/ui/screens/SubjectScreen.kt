@@ -23,7 +23,6 @@ import com.slobodan.pmfapp.viewmodel.SubjectViewModel
 @Composable
 fun SubjectScreen (
     subjectId: Int,
-    onBackClick: () -> Unit,
     viewModel: SubjectViewModel = viewModel(factory = SubjectViewModel.Factory)
 ) {
     LaunchedEffect(subjectId) {

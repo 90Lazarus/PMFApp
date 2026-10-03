@@ -9,16 +9,21 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +31,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,7 +51,6 @@ import com.slobodan.pmfapp.viewmodel.StudyProgramViewModel
 fun ProgramScreen(
     selectedProgram: StudyPrograms,
     onSubjectSelected: (Int) -> Unit,
-    onBackClick: () -> Unit,
     viewModel: StudyProgramViewModel = viewModel(factory = StudyProgramViewModel.Factory)
 ) {
     val configuration = LocalConfiguration.current
@@ -63,10 +68,19 @@ fun ProgramScreen(
             CircularProgressIndicator()
         }
     } else {
-        var selectedYear by remember { mutableIntStateOf(0) }
-        val semestersToShow = when (selectedYear) {
-            0 -> 1..6
-            else -> ((selectedYear * 2) - 1)..(selectedYear * 2)
+        var searchText by rememberSaveable { mutableStateOf("") }
+        var selectedYear by rememberSaveable { mutableIntStateOf(0) }
+        val filteredSubjects = studyProgram!!.subjects.filter { subject ->
+            subject.name.contains(searchText, ignoreCase = true)
+                    //|| subject.code.contains(searchText, ignoreCase = true)
+        }
+        val semestersToShow = if (searchText.isNotBlank()) {
+            1..6
+        } else {
+            when (selectedYear) {
+                0 -> 1..6
+                else -> ((selectedYear * 2) - 1)..(selectedYear * 2)
+            }
         }
         Surface(
             modifier = Modifier.padding(4.dp),
@@ -120,6 +134,7 @@ fun ProgramScreen(
                     for (i in 1..((studyProgram?.studyProgram?.duration) ?: 0)) {
                         FilterChip(
                             selected = selectedYear == i,
+                            enabled = searchText.isBlank(),
                             onClick = { selectedYear = i },
                             label = {
                                 Text(text = "$i")
@@ -128,6 +143,7 @@ fun ProgramScreen(
                     }
                     FilterChip(
                         selected = selectedYear == 0,
+                        enabled = searchText.isBlank(),
                         onClick = { selectedYear = 0 },
                         label = {
                             Text(text = stringResource(R.string.sp_sve))
@@ -140,7 +156,9 @@ fun ProgramScreen(
                     shape = CutCornerShape(4.dp),
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(4.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
@@ -151,9 +169,35 @@ fun ProgramScreen(
                         )
                         Text(
                             text = stringResource(R.string.sub_info_naziv_predmeta),
-                            modifier = Modifier.weight(2.5f),
+                            modifier = Modifier.weight(1f),
                             style = MaterialTheme.typography.labelMedium,
                             textAlign = TextAlign.Left
+                        )
+                        OutlinedTextField(
+                            value = searchText,
+                            onValueChange = { searchText = it },
+                            modifier = Modifier.weight(2.5f),
+                            singleLine = true,
+                            textStyle = MaterialTheme.typography.labelSmall,
+                            shape = CutCornerShape(4.dp),
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Default.Search,
+                                    contentDescription = null
+                                )
+                            },
+                            trailingIcon = {
+                                if (searchText.isNotEmpty()) {
+                                    IconButton(
+                                        onClick = { searchText = "" }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Clear,
+                                            contentDescription = stringResource(R.string.dsc_delete)
+                                        )
+                                    }
+                                }
+                            }
                         )
                         Text(
                             text = stringResource(R.string.sub_info_broj_espb),
@@ -168,10 +212,12 @@ fun ProgramScreen(
                         //colors = CardDefaults.cardColors(MaterialTheme.colorScheme.onSurfaceVariant)
                     ) {
                         LazyColumn(
-                            modifier = Modifier.fillMaxWidth().weight(1f)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f)
                         ) {
                             items(semestersToShow.toList()) { semester ->
-                                val subjectsInSemester = studyProgram!!.subjects.filter {
+                                val subjectsInSemester = filteredSubjects.filter {
                                     it.semester == semester
                                 }
                                 val mandatorySubjects = subjectsInSemester.filter {
@@ -200,62 +246,28 @@ fun ProgramScreen(
                                 val totalEspb = mandatoryEspb + optionalEspb
 
                                 Card(
-                                    modifier = Modifier.fillMaxWidth().padding(4.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(4.dp),
                                     shape = CutCornerShape(4.dp),
                                     colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                                 ) {
                                     Column(
                                         modifier = Modifier.fillMaxWidth()
                                     ) {
-                                    Text(
-                                        text = "${stringResource(R.string.sp_semestar)} $semester",
-                                        modifier = Modifier.fillMaxWidth(),
-                                        textAlign = TextAlign.Center,
-                                        style = MaterialTheme.typography.titleMedium,
-                                        fontWeight = FontWeight.Bold
-                                    )
-
-                                mandatorySubjects.forEach { subject ->
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth().padding(4.dp)
-                                    ) {
                                         Text(
-                                            text = subject.code,
-                                            modifier = Modifier.weight(1f),
+                                            text = "${stringResource(R.string.sp_semestar)} $semester",
+                                            modifier = Modifier.fillMaxWidth(),
+                                            textAlign = TextAlign.Center,
                                             style = MaterialTheme.typography.titleMedium,
-                                            textAlign = TextAlign.Left
+                                            fontWeight = FontWeight.Bold
                                         )
-                                        Text(
-                                            text = subject.name,
-                                            modifier = Modifier.weight(2.5f).clickable { onSubjectSelected(subject.id) },
-                                            color = MaterialTheme.colorScheme.tertiary,
-                                            style = MaterialTheme.typography.titleMedium,
-                                            textAlign = TextAlign.Left
-                                        )
-                                        Text(
-                                            text = "${subject.espb}",
-                                            modifier = Modifier.weight(0.5f),
-                                            style = MaterialTheme.typography.titleMedium,
-                                            textAlign = TextAlign.Right
-                                        )
-                                    }
-                                }
-                                optionalBlocksInSemester.forEach { block ->
-                                        val subjectsInBlock =
-                                            subjectsInSemester.filter {
-                                                it.optionalBlockId == block.id
-                                            }
 
-                                            Text(
-                                                text = "${stringResource(R.string.p_izborni_blok)} ${block.blockNumber} (${stringResource(R.string.p_bira_se)} ${block.numberOfSubjetsToChoose} ${stringResource(R.string.p_od)} ${subjectsInBlock.size} ${stringResource(R.string.p_predmeta)})",
-                                                modifier = Modifier.fillMaxWidth(),
-                                                style = MaterialTheme.typography.titleSmall,
-                                                textAlign = TextAlign.Center
-                                            )
-
-                                        subjectsInBlock.forEach { subject ->
+                                        mandatorySubjects.forEach { subject ->
                                             Row(
-                                                modifier = Modifier.fillMaxWidth().padding(4.dp)
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(4.dp)
                                             ) {
                                                 Text(
                                                     text = subject.code,
@@ -265,7 +277,9 @@ fun ProgramScreen(
                                                 )
                                                 Text(
                                                     text = subject.name,
-                                                    modifier = Modifier.weight(2.5f).clickable { onSubjectSelected(subject.id) },
+                                                    modifier = Modifier
+                                                        .weight(2.5f)
+                                                        .clickable { onSubjectSelected(subject.id) },
                                                     color = MaterialTheme.colorScheme.tertiary,
                                                     style = MaterialTheme.typography.titleMedium,
                                                     textAlign = TextAlign.Left
@@ -278,26 +292,88 @@ fun ProgramScreen(
                                                 )
                                             }
                                         }
-                                    }
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth().padding(4.dp),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Text(
-                                            text = "${stringResource(R.string.p_ukupan_broj_predmeta)}: $totalSubjects",
-                                            modifier = Modifier.weight(1f),
-                                            style = MaterialTheme.typography.labelMedium,
-                                            textAlign = TextAlign.Left
-                                        )
-                                        Text(
-                                            text = "${stringResource(R.string.p_ukupan_broj_espb)}: $totalEspb",
-                                            modifier = Modifier.weight(1f),
-                                            style = MaterialTheme.typography.labelMedium,
-                                            textAlign = TextAlign.Right
-                                        )
+                                        optionalBlocksInSemester.forEach { block ->
+                                            val subjectsInBlock =
+                                                subjectsInSemester.filter {
+                                                    it.optionalBlockId == block.id
+                                                }
+                                            if (subjectsInBlock.isNotEmpty()) {
+
+                                                Text(
+                                                    text = "${stringResource(R.string.p_izborni_blok)} ${block.blockNumber} (${
+                                                        stringResource(
+                                                            R.string.p_bira_se
+                                                        )
+                                                    } ${block.numberOfSubjetsToChoose} ${
+                                                        stringResource(
+                                                            R.string.p_od
+                                                        )
+                                                    } ${subjectsInBlock.size} ${
+                                                        stringResource(
+                                                            R.string.p_predmeta
+                                                        )
+                                                    })",
+                                                    modifier = Modifier.fillMaxWidth(),
+                                                    style = MaterialTheme.typography.titleSmall,
+                                                    textAlign = TextAlign.Center
+                                                )
+
+                                                subjectsInBlock.forEach { subject ->
+                                                    Row(
+                                                        modifier = Modifier
+                                                            .fillMaxWidth()
+                                                            .padding(4.dp)
+                                                    ) {
+                                                        Text(
+                                                            text = subject.code,
+                                                            modifier = Modifier.weight(1f),
+                                                            style = MaterialTheme.typography.titleMedium,
+                                                            textAlign = TextAlign.Left
+                                                        )
+                                                        Text(
+                                                            text = subject.name,
+                                                            modifier = Modifier
+                                                                .weight(2.5f)
+                                                                .clickable {
+                                                                    onSubjectSelected(
+                                                                        subject.id
+                                                                    )
+                                                                },
+                                                            color = MaterialTheme.colorScheme.tertiary,
+                                                            style = MaterialTheme.typography.titleMedium,
+                                                            textAlign = TextAlign.Left
+                                                        )
+                                                        Text(
+                                                            text = "${subject.espb}",
+                                                            modifier = Modifier.weight(0.5f),
+                                                            style = MaterialTheme.typography.titleMedium,
+                                                            textAlign = TextAlign.Right
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        Row(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(4.dp),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                text = "${stringResource(R.string.p_ukupan_broj_predmeta)}: $totalSubjects",
+                                                modifier = Modifier.weight(1f),
+                                                style = MaterialTheme.typography.labelMedium,
+                                                textAlign = TextAlign.Left
+                                            )
+                                            Text(
+                                                text = "${stringResource(R.string.p_ukupan_broj_espb)}: $totalEspb",
+                                                modifier = Modifier.weight(1f),
+                                                style = MaterialTheme.typography.labelMedium,
+                                                textAlign = TextAlign.Right
+                                            )
+                                        }
                                     }
                                 }
-                            }
                             }
                             val subjectsInYear = studyProgram!!.subjects.filter {
                                 it.semester in semestersToShow
@@ -329,7 +405,9 @@ fun ProgramScreen(
 
                             item {
                                 Row(
-                                    modifier = Modifier.fillMaxWidth().padding(4.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(4.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(

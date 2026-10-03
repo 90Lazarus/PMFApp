@@ -33,8 +33,7 @@ import com.slobodan.pmfapp.ui.components.PMFAppHeader
 @Composable
 fun DepartmentsScreen(
     selectedDegree: DegreeLevel,
-    onDepartmentSelected: (Department) -> Unit,
-    onBackClick: () -> Unit,
+    onDepartmentSelected: (Department) -> Unit
 ) {
     Surface(
         modifier = Modifier.padding(4.dp),

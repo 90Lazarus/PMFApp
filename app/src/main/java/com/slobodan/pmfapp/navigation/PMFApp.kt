@@ -1,4 +1,4 @@
-package com.slobodan.pmfapp.ui
+package com.slobodan.pmfapp.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,7 +16,6 @@ import androidx.navigation.compose.rememberNavController
 import com.slobodan.pmfapp.data.model.enums.DegreeLevel
 import com.slobodan.pmfapp.data.model.enums.Department
 import com.slobodan.pmfapp.data.model.enums.StudyPrograms
-import com.slobodan.pmfapp.navigation.PMFAppScreens
 import com.slobodan.pmfapp.ui.components.PMFAppBottomBar
 import com.slobodan.pmfapp.ui.components.PMFTopAppBar
 import com.slobodan.pmfapp.ui.screens.DegreeLevelsScreen
@@ -39,7 +38,6 @@ fun PMFApp() {
     val selectedDepartment = selectedDepartmentName?.let { Department.valueOf(it) }
     var selectedProgramName by rememberSaveable { mutableStateOf<String?>(null) }
     val selectedProgram = selectedProgramName?.let { StudyPrograms.valueOf(it) }
-    //var selectedProgramId by rememberSaveable { mutableStateOf<Int?>(null) }
     var selectedSubjectId by rememberSaveable { mutableStateOf<Int?>(null) }
 
     Scaffold(
@@ -85,9 +83,6 @@ fun PMFApp() {
                     onDepartmentSelected = { department ->
                         selectedDepartmentName = department.name
                         navController.navigate(PMFAppScreens.STUDY_PROGRAMS_SCREEN.name)
-                    },
-                    onBackClick = {
-                        navController.popBackStack()
                     }
                 )
             }
@@ -98,9 +93,6 @@ fun PMFApp() {
                     onStudyProgramSelected = { program ->
                         selectedProgramName = program.name
                         navController.navigate(PMFAppScreens.PROGRAM_SCREEN.name)
-                    },
-                    onBackClick = {
-                        navController.popBackStack()
                     }
                 )
             }
@@ -111,9 +103,6 @@ fun PMFApp() {
                         onSubjectSelected = { subjectId ->
                             selectedSubjectId = subjectId
                             navController.navigate(PMFAppScreens.SUBJECT_SCREEN.name)
-                        },
-                        onBackClick = {
-                            navController.popBackStack()
                         }
                     )
                 }
@@ -121,10 +110,7 @@ fun PMFApp() {
             composable(route = PMFAppScreens.SUBJECT_SCREEN.name) {
                 selectedSubjectId?.let {
                     SubjectScreen(
-                        subjectId = it,
-                        onBackClick = {
-                            navController.popBackStack()
-                        }
+                        subjectId = it
                     )
                 }
             }

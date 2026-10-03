@@ -111,4 +111,5 @@
     <string name="inf_email">Adresa elektronske pošte</string>
     <string name="inf_facebook">Facebook</string>
     <string name="inf_instagram">Instagram</string>
+    <string name="dsc_delete">Obriši</string>
 </resources>
