@@ -37,58 +37,6 @@ private val LightColorScheme = lightColorScheme(
     onSurfaceVariant = Color(0xFF293338)
 )
 
-private val LightColorScheme1 = lightColorScheme(
-    primary = Color(0xFF123F63),
-    onPrimary = Color.White,
-    primaryContainer = Color(0xFFB7DDF5),
-    onPrimaryContainer = Color(0xFF001D31),
-
-    secondary = Color(0xFF276B8C),
-    onSecondary = Color.White,
-    secondaryContainer = Color(0xFFBCE7FA),
-    onSecondaryContainer = Color(0xFF001E2B),
-
-    tertiary = Color(0xFF765B32),
-    onTertiary = Color.White,
-    tertiaryContainer = Color(0xFFEEDDBD),
-    onTertiaryContainer = Color(0xFF281A05),
-
-    background = Color(0xFFE8EEF1),
-    onBackground = Color(0xFF15191C),
-
-    surface = Color(0xFFFCFDFC),
-    onSurface = Color(0xFF15191C),
-
-    surfaceVariant = Color(0xFFC8D7DF),
-    onSurfaceVariant = Color(0xFF35434A)
-)
-
-private val LightColorScheme3 = lightColorScheme(
-    primary = Color(0xFF187A78),
-    onPrimary = Color.White,
-    primaryContainer = Color(0xFFA8E5E0),
-    onPrimaryContainer = Color(0xFF00201F),
-
-    secondary = Color(0xFF4F6F70),
-    onSecondary = Color.White,
-    secondaryContainer = Color(0xFFCBE5E4),
-    onSecondaryContainer = Color(0xFF0C2020),
-
-    tertiary = Color(0xFF65734D),
-    onTertiary = Color.White,
-    tertiaryContainer = Color(0xFFDCE6C7),
-    onTertiaryContainer = Color(0xFF1B220D),
-
-    background = Color(0xFFEAF2F0),
-    onBackground = Color(0xFF171C1B),
-
-    surface = Color(0xFFFAFDFC),
-    onSurface = Color(0xFF171C1B),
-
-    surfaceVariant = Color(0xFFD0DEDC),
-    onSurfaceVariant = Color(0xFF3E4A48)
-)
-
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFFC2CBD0),
     onPrimary = Color(0xFF161A1D),

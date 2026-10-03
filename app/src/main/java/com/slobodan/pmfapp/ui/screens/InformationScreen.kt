@@ -44,12 +44,16 @@ fun InformationScreen() {
         //border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.primary)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(4.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(4.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
             Card(
-                modifier = Modifier.fillMaxWidth().padding(4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
                 shape = CutCornerShape(4.dp),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
             ) {
@@ -61,7 +65,9 @@ fun InformationScreen() {
                 )
             }
             Card(
-                modifier = Modifier.fillMaxWidth().padding(4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
                 shape = CutCornerShape(4.dp),
             ) {
                 LazyColumn(
@@ -69,14 +75,16 @@ fun InformationScreen() {
                 ) {
                     item {
                         Card(
-                            modifier = Modifier.fillMaxWidth().padding(4.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp),
                             shape = CutCornerShape(4.dp),
                             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
                         ) {
                             InformationContactItem(
                                 icon = Icons.Default.AddHome,
                                 label = stringResource(R.string.l_adresa_fakulteta),
-                                value = "18106 Niš • Višegradska 33 • Poš. fah : 224",
+                                value = stringResource(R.string.inf_full_address),
                                 textColour = MaterialTheme.colorScheme.tertiary,
                                 onClick = {
                                     val mapUri = "geo:0,0?q=Višegradska 33, Niš".toUri()
@@ -88,7 +96,9 @@ fun InformationScreen() {
                     }
                     item {
                         Card(
-                            modifier = Modifier.fillMaxWidth().padding(4.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp),
                             shape = CutCornerShape(4.dp),
                             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
                         ) {
@@ -109,7 +119,9 @@ fun InformationScreen() {
                     }
                     item {
                         Card(
-                            modifier = Modifier.fillMaxWidth().padding(4.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp),
                             shape = CutCornerShape(4.dp),
                             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
                         ) {
@@ -122,7 +134,9 @@ fun InformationScreen() {
                     }
                     item {
                         Card(
-                            modifier = Modifier.fillMaxWidth().padding(4.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp),
                             shape = CutCornerShape(4.dp),
                             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
                         ) {
@@ -135,7 +149,9 @@ fun InformationScreen() {
                     }
                     item {
                         Card(
-                            modifier = Modifier.fillMaxWidth().padding(4.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp),
                             shape = CutCornerShape(4.dp),
                             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
                         ) {
@@ -148,7 +164,9 @@ fun InformationScreen() {
                     }
                     item {
                         Card(
-                            modifier = Modifier.fillMaxWidth().padding(4.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp),
                             shape = CutCornerShape(4.dp),
                             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
                         ) {
@@ -169,7 +187,9 @@ fun InformationScreen() {
                     }
                     item {
                         Card(
-                            modifier = Modifier.fillMaxWidth().padding(4.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp),
                             shape = CutCornerShape(4.dp),
                             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
                         ) {
@@ -190,7 +210,9 @@ fun InformationScreen() {
                     }
                     item {
                         Card(
-                            modifier = Modifier.fillMaxWidth().padding(4.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp),
                             shape = CutCornerShape(4.dp),
                             colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
                         ) {
