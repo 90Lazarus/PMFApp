@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.slobodan.pmfapp.PMFApplication
-import com.slobodan.pmfapp.data.model.StudyProgramWithDetailsWithSubjects
+import com.slobodan.pmfapp.data.model.relation.StudyProgramWithDetailsWithSubjects
 import com.slobodan.pmfapp.data.model.enums.StudyPrograms
 import com.slobodan.pmfapp.data.repository.StudyProgramRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,13 +18,11 @@ class StudyProgramViewModel (
     private val studyProgramRepository: StudyProgramRepository,
     ) : ViewModel() {
     companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
+        val factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application: PMFApplication = this[APPLICATION_KEY] as PMFApplication
                 val studyProgramRepository = application.studyProgramRepository
-                StudyProgramViewModel(
-                    studyProgramRepository = studyProgramRepository,
-                )
+                StudyProgramViewModel(studyProgramRepository = studyProgramRepository)
             }
         }
     }
@@ -32,7 +30,7 @@ class StudyProgramViewModel (
     val studyProgram = _studyProgram.asStateFlow()
     fun loadStudyProgram(program: StudyPrograms) {
         viewModelScope.launch {
-            _studyProgram.value = studyProgramRepository.getStudyProgramByEnum2(program)
+            _studyProgram.value = studyProgramRepository.getStudyProgram(program)
         }
     }
 }

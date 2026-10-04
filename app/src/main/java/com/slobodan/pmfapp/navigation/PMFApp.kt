@@ -1,5 +1,6 @@
 package com.slobodan.pmfapp.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -28,10 +29,6 @@ import com.slobodan.pmfapp.ui.screens.SubjectScreen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PMFApp() {
-    val navController = rememberNavController()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-
     var selectedDegreeName by rememberSaveable { mutableStateOf<String?>(null) }
     val selectedDegree = selectedDegreeName?.let { DegreeLevel.valueOf(it) }
     var selectedDepartmentName by rememberSaveable { mutableStateOf<String?>(null) }
@@ -40,6 +37,25 @@ fun PMFApp() {
     val selectedProgram = selectedProgramName?.let { StudyPrograms.valueOf(it) }
     var selectedSubjectId by rememberSaveable { mutableStateOf<Int?>(null) }
 
+    val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+    //We've had one, yes. What about second back button
+    val handleBack: () -> Unit = {
+        if (currentRoute == PMFAppScreens.SUBJECT_SCREEN.name) {
+            navController.popBackStack(
+                PMFAppScreens.PROGRAM_SCREEN.name,
+                inclusive = false
+            )
+        } else {
+            navController.popBackStack()
+        }
+    }
+    BackHandler(
+        enabled = currentRoute != PMFAppScreens.DEGREE_LEVELS_SCREEN.name
+    ) {
+        handleBack()
+    }
     Scaffold(
         bottomBar = {
             PMFAppBottomBar(
@@ -60,10 +76,9 @@ fun PMFApp() {
         topBar = {
             PMFTopAppBar (
                 showBackButton = currentRoute != PMFAppScreens.DEGREE_LEVELS_SCREEN.name,
-                onBackClick = { navController.popBackStack() }
+                onBackClick = handleBack
             ) }
     ) { innerPadding ->
-
         NavHost(
             navController = navController,
             startDestination = PMFAppScreens.DEGREE_LEVELS_SCREEN.name,
@@ -110,7 +125,11 @@ fun PMFApp() {
             composable(route = PMFAppScreens.SUBJECT_SCREEN.name) {
                 selectedSubjectId?.let {
                     SubjectScreen(
-                        subjectId = it
+                        subjectId = it,
+                        onSubjectSelected = { subjectId ->
+                            selectedSubjectId = subjectId
+                            navController.navigate(PMFAppScreens.SUBJECT_SCREEN.name)
+                        }
                     )
                 }
             }

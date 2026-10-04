@@ -1,4 +1,4 @@
-package com.slobodan.pmfapp.data.model
+package com.slobodan.pmfapp.data.model.relation
 
 import androidx.room.ColumnInfo
 
@@ -35,7 +35,4 @@ data class SubjectLowDetails(
 
     @ColumnInfo(name = "br_ostalo")
     val numRest: Int?
-
-//    @ColumnInfo(name = "studijski_program_id")
-//    val studyProgramId: Int
 )

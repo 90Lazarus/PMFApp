@@ -51,7 +51,7 @@ import com.slobodan.pmfapp.viewmodel.StudyProgramViewModel
 fun ProgramScreen(
     selectedProgram: StudyPrograms,
     onSubjectSelected: (Int) -> Unit,
-    viewModel: StudyProgramViewModel = viewModel(factory = StudyProgramViewModel.Factory)
+    viewModel: StudyProgramViewModel = viewModel(factory = StudyProgramViewModel.factory)
 ) {
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -278,7 +278,7 @@ fun ProgramScreen(
                                                 Text(
                                                     text = subject.name,
                                                     modifier = Modifier
-                                                        .weight(2.5f)
+                                                        .weight(3.5f)
                                                         .clickable { onSubjectSelected(subject.id) },
                                                     color = MaterialTheme.colorScheme.tertiary,
                                                     style = MaterialTheme.typography.titleMedium,
@@ -333,7 +333,7 @@ fun ProgramScreen(
                                                         Text(
                                                             text = subject.name,
                                                             modifier = Modifier
-                                                                .weight(2.5f)
+                                                                .weight(3.5f)
                                                                 .clickable {
                                                                     onSubjectSelected(
                                                                         subject.id

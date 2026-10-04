@@ -1,17 +1,17 @@
-package com.slobodan.pmfapp.data.entity
+package com.slobodan.pmfapp.data.model.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "stepeni_studija")
-data class DegreeLevelEntity(
+@Entity(tableName = "departmani")
+data class DepartmentEntity(
     @PrimaryKey
     val id: Int,
 
     @ColumnInfo(name = "naziv")
     val name: String,
 
-    @ColumnInfo("naziv_en")
+    @ColumnInfo(name = "naziv_en")
     val nameEn: String?
 )

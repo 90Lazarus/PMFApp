@@ -1,4 +1,4 @@
-package com.slobodan.pmfapp.data.source
+package com.slobodan.pmfapp.data.config
 
 import com.slobodan.pmfapp.data.model.enums.DegreeLevel
 import com.slobodan.pmfapp.data.model.enums.Department

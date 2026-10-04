@@ -28,7 +28,7 @@ import com.slobodan.pmfapp.R
 import com.slobodan.pmfapp.data.model.enums.DegreeLevel
 import com.slobodan.pmfapp.data.model.enums.Department
 import com.slobodan.pmfapp.data.model.enums.StudyPrograms
-import com.slobodan.pmfapp.data.source.availablePrograms
+import com.slobodan.pmfapp.data.config.availablePrograms
 import com.slobodan.pmfapp.ui.components.PMFAppDegreeCard
 import com.slobodan.pmfapp.ui.components.PMFAppHeader
 import com.slobodan.pmfapp.viewmodel.StudyProgramViewModel
@@ -38,7 +38,7 @@ fun StudyProgramsScreen(
     selectedDegree: DegreeLevel,
     selectedDepartment: Department,
     onStudyProgramSelected: (StudyPrograms) -> Unit,
-    viewModel: StudyProgramViewModel = viewModel(factory = StudyProgramViewModel.Factory)
+    viewModel: StudyProgramViewModel = viewModel(factory = StudyProgramViewModel.factory)
 ) {
     val programs = availablePrograms[selectedDegree to selectedDepartment]
     val image = when (selectedDepartment) {

@@ -31,11 +31,13 @@ fun RowScope.SubjectInfoItemMany(
             modifier = Modifier.fillMaxWidth().padding(4.dp),
             text = buildAnnotatedString {
                 withStyle(style = SpanStyle(
+                    fontFamily = MaterialTheme.typography.titleMedium.fontFamily,
                     fontSize = MaterialTheme.typography.labelMedium.fontSize,
                     fontWeight = FontWeight.Bold)) {
                     append("$label: \n")
                 }
                 withStyle(style = SpanStyle(
+                    fontFamily = MaterialTheme.typography.titleSmall.fontFamily,
                     fontSize = MaterialTheme.typography.labelSmall.fontSize,
                     fontWeight = FontWeight.Bold)) {
                     append((value?: 0).toString())

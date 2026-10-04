@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.slobodan.pmfapp.PMFApplication
-import com.slobodan.pmfapp.data.model.SubjectWithDetails
+import com.slobodan.pmfapp.data.model.relation.SubjectWithDetails
 import com.slobodan.pmfapp.data.repository.SubjectRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,13 +17,11 @@ class SubjectViewModel (
     private val subjectRepository: SubjectRepository,
 ) : ViewModel() {
     companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
+        val factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application: PMFApplication = this[APPLICATION_KEY] as PMFApplication
                 val subjectRepository = application.subjectRepository
-                SubjectViewModel(
-                    subjectRepository = subjectRepository,
-                )
+                SubjectViewModel(subjectRepository = subjectRepository)
             }
         }
     }
@@ -32,6 +30,12 @@ class SubjectViewModel (
     fun loadSubjectById(id: Int) {
         viewModelScope.launch {
             _subject.value = subjectRepository.getSubjectDetails(id)
+        }
+    }
+    fun getSubjectIdByName(name: String, studyProgramId: Int, onResult: (Int?) -> Unit) {
+        viewModelScope.launch {
+            val subjectId = subjectRepository.getSubjectIdByName(name, studyProgramId)
+            onResult(subjectId)
         }
     }
 }

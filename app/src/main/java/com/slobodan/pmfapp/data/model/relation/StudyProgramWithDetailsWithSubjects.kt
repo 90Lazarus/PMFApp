@@ -1,23 +1,23 @@
-package com.slobodan.pmfapp.data.model
+package com.slobodan.pmfapp.data.model.relation
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.slobodan.pmfapp.data.entity.DegreeLevelEntity
-import com.slobodan.pmfapp.data.entity.DepartmentEntity
-import com.slobodan.pmfapp.data.entity.OptionalBlockEntity
-import com.slobodan.pmfapp.data.entity.StudyProgramEntity
-import com.slobodan.pmfapp.data.entity.SubjectEntity
+import com.slobodan.pmfapp.data.model.entity.DegreeLevelEntity
+import com.slobodan.pmfapp.data.model.entity.DepartmentEntity
+import com.slobodan.pmfapp.data.model.entity.OptionalBlockEntity
+import com.slobodan.pmfapp.data.model.entity.StudyProgramEntity
+import com.slobodan.pmfapp.data.model.entity.SubjectEntity
 
 data class StudyProgramWithDetailsWithSubjects(
     @Embedded
     val studyProgram: StudyProgramEntity,
 
-    @Relation (
+    @Relation(
         parentColumn = "stepen_studija_id",
         entityColumn = "id"
     ) val degreeLevel: DegreeLevelEntity,
 
-    @Relation (
+    @Relation(
         parentColumn = "departman_id",
         entityColumn = "id"
     ) val department: DepartmentEntity,

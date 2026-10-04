@@ -10,11 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.slobodan.pmfapp.R
+import com.slobodan.pmfapp.ui.components.SubjectConditionItem
 import com.slobodan.pmfapp.ui.components.SubjectInfoItem
 import com.slobodan.pmfapp.ui.components.SubjectInfoItemMany
 import com.slobodan.pmfapp.ui.components.SubjectTitleCard
@@ -23,14 +25,20 @@ import com.slobodan.pmfapp.viewmodel.SubjectViewModel
 @Composable
 fun SubjectScreen (
     subjectId: Int,
-    viewModel: SubjectViewModel = viewModel(factory = SubjectViewModel.Factory)
+    onSubjectSelected: (Int) -> Unit,
+    viewModel: SubjectViewModel = viewModel(factory = SubjectViewModel.factory)
 ) {
+    val scope = rememberCoroutineScope()
     LaunchedEffect(subjectId) {
         viewModel.loadSubjectById(subjectId)
     }
-
     val subject by viewModel.subject.collectAsState()
     val currentSubject = subject ?: run { CircularProgressIndicator(); return }
+
+    val conditions = currentSubject.subject.condition
+        ?.split(",")
+        ?.map { it.trim() }
+        ?: emptyList()
 
     LazyColumn() {
         item { SubjectInfoItem(label = stringResource(R.string.sub_info_studijski_program), value = currentSubject.studyProgram.name) }
@@ -38,7 +46,18 @@ fun SubjectScreen (
         item { SubjectInfoItem(label = stringResource(R.string.sub_info_nastavnik), value = currentSubject.subject.teacher) }
         item { SubjectInfoItem(label = stringResource(R.string.sub_info_status_predmeta), value = currentSubject.subject.status) }
         item { SubjectInfoItem(label = stringResource(R.string.sub_info_broj_espb), value = currentSubject.subject.espb.toString()) }
-        item { SubjectInfoItem(label = stringResource(R.string.sub_info_uslov), value = currentSubject.subject.condition) }
+        item { SubjectConditionItem(label = stringResource(R.string.sub_info_uslov), condition = currentSubject.subject.condition,
+            onConditionClick = { subjectName ->
+                viewModel.getSubjectIdByName(
+                    name = subjectName,
+                    studyProgramId = currentSubject.studyProgram.id
+                ) { subjectId ->
+                    if (subjectId != null) {
+                        onSubjectSelected(subjectId)
+                    }
+                }
+            })
+        }
         item { SubjectInfoItem(label = stringResource(R.string.sub_info_cilj_predmeta), value = "\n" + currentSubject.subject.target) }
         item { SubjectInfoItem(label = stringResource(R.string.sub_info_ishod_predmeta), value = "\n" + currentSubject.subject.outcome) }
         item { SubjectInfoItem(label = stringResource(R.string.sub_info_sadrzaj_predmeta), value = "\n" + currentSubject.subject.contents) }

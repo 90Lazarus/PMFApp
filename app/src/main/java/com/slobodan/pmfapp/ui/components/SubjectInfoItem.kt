@@ -19,19 +19,21 @@ fun SubjectInfoItem(
     value: String?
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth().padding(4.dp)
+        modifier = Modifier.fillMaxWidth().padding(4.dp),
     ) {
         Text( // one text but two styles, first part should be bold, second nope
             modifier = Modifier.padding(4.dp),
             text = buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
+                        fontFamily = MaterialTheme.typography.titleMedium.fontFamily,
                         fontSize = MaterialTheme.typography.titleMedium.fontSize,
                         fontWeight = FontWeight.Bold
                     )
                 ) { append("$label: ") }
                 withStyle(
                     style = SpanStyle(
+                        fontFamily = MaterialTheme.typography.titleSmall.fontFamily,
                         fontSize = MaterialTheme.typography.titleSmall.fontSize,
                         fontWeight = FontWeight.Medium
                     )

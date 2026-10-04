@@ -1,4 +1,4 @@
-package com.slobodan.pmfapp.data.entity
+package com.slobodan.pmfapp.data.model.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

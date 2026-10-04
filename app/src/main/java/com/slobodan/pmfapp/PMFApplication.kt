@@ -12,7 +12,6 @@ class PMFApplication : Application() {
     val studyProgramRepository by lazy {
         StudyProgramRepository(database.studyProgramDao())
     }
-
     val subjectRepository by lazy {
         SubjectRepository(database.subjectDao())
     }
