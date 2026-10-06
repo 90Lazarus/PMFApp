@@ -21,14 +21,14 @@ import com.slobodan.pmfapp.R
 @Composable
 fun PMFAppHeader() {
     Row(
-        modifier = Modifier.padding(4.dp),
+        modifier = Modifier.fillMaxWidth().padding(4.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             painter = painterResource(R.drawable.pmf_logo),
             contentDescription = stringResource(R.string.faculty_logo_description)
-        )
+            )
         Column(
             modifier = Modifier.padding(4.dp),
             verticalArrangement = Arrangement.Center,
@@ -36,26 +36,20 @@ fun PMFAppHeader() {
         ) {
             Text(
                 text = stringResource(R.string.university_name),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(4.dp),
+                modifier = Modifier.fillMaxWidth().padding(4.dp),
                 textAlign = TextAlign.Left,
                 style = MaterialTheme.typography.titleSmall
             )
             Text(
                 text = stringResource(R.string.faculty_name),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(4.dp),
+                modifier = Modifier.fillMaxWidth().padding(4.dp),
                 textAlign = TextAlign.Left,
                 style = MaterialTheme.typography.headlineSmall,
             )
         }
     }
     Image(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(4.dp),
+        modifier = Modifier.fillMaxWidth().padding(4.dp),
         painter = painterResource(R.drawable.pmf_front),
         contentDescription = stringResource(R.string.faculty_photo),
         contentScale = ContentScale.FillWidth

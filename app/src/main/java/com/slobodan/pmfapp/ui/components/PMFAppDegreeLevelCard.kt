@@ -14,14 +14,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RowScope.PMFAppDegreeCard(
+fun RowScope.PMFAppDegreeLevelCard(
     name: String,
     selected: Boolean
 ) {
     Card(
-        modifier = Modifier
-            .weight(1f)
-            .padding(4.dp),
+        modifier = Modifier.weight(1f).padding(4.dp),
         shape = CutCornerShape(4.dp),
         colors = CardDefaults.cardColors(
             containerColor =
@@ -31,9 +29,7 @@ fun RowScope.PMFAppDegreeCard(
     ) {
         Text(
             text = name,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp),
+            modifier = Modifier.fillMaxWidth().padding(4.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleSmall
         )

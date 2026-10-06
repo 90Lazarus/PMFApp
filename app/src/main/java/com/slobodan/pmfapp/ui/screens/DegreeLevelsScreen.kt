@@ -30,8 +30,7 @@ fun DegreeLevelsScreen(
     Surface(
         modifier = Modifier.padding(4.dp),
         shape = RoundedCornerShape(4.dp),
-        tonalElevation = 4.dp,
-        //border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.primary)
+        tonalElevation = 4.dp
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -57,7 +56,6 @@ fun DegreeLevelsScreen(
                         onClick = { onDegreeSelected(degreeLevel) },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
-                        //border = BorderStroke(width = 2.dp, color = MaterialTheme.colorScheme.primaryContainer),
                         shape = RoundedCornerShape(9.dp)
                     ) {
                         Text(

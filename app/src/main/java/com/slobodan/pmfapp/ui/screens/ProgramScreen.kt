@@ -53,12 +53,12 @@ fun ProgramScreen(
     onSubjectSelected: (Int) -> Unit,
     viewModel: StudyProgramViewModel = viewModel(factory = StudyProgramViewModel.factory)
 ) {
-    val configuration = LocalConfiguration.current
-    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
 
     LaunchedEffect(selectedProgram) {
         viewModel.loadStudyProgram(selectedProgram)
     }
+
     val studyProgram by viewModel.studyProgram.collectAsState()
     if (studyProgram == null) {
         Box(
@@ -85,8 +85,7 @@ fun ProgramScreen(
         Surface(
             modifier = Modifier.padding(4.dp),
             shape = RoundedCornerShape(4.dp),
-            tonalElevation = 4.dp,
-            //border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.primary)
+            tonalElevation = 4.dp
         ) {
             Column(
                 modifier = Modifier
@@ -96,36 +95,41 @@ fun ProgramScreen(
                 verticalArrangement = Arrangement.Top
             ) {
                 if(!isLandscape) {
-                    StudyProgramHeaderRow(
-                        leftLabel = stringResource(R.string.sp_stepen_studija),
-                        leftValue = studyProgram?.degreeLevel?.name,
-                        rightLabel = stringResource(R.string.sp_departman),
-                        rightValue = studyProgram?.department?.name
-                    )
-                    StudyProgramHeaderRow(
-                        leftLabel = stringResource(R.string.sp_naziv_programa),
-                        leftValue = studyProgram?.studyProgram?.name
-                            ?: "No entries in the database!",
-                        leftValueStyle = MaterialTheme.typography.headlineSmall,
-                        leftWeight = 3f,
-                        leftContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                        rightLabel = stringResource(R.string.sp_godina_akreditacije),
-                        rightValue = studyProgram?.studyProgram?.accreditationYear?.toString(),
-                        rightWeight = 1f
-                    )
-                    StudyProgramHeaderRow(
-                        leftLabel = stringResource(R.string.sp_godine_trajanja),
-                        leftValue = studyProgram?.studyProgram?.duration?.toString(),
-                        rightLabel = stringResource(R.string.sp_ukupan_broj_espb_bodova),
-                        rightValue = studyProgram?.studyProgram?.espb?.toString()
-                    )
+                    Card(
+                        modifier = Modifier.padding(4.dp),
+                        shape = CutCornerShape(4.dp),
+                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
+                    ) {
+                        StudyProgramHeaderRow(
+                            leftLabel = stringResource(R.string.sp_stepen_studija),
+                            leftValue = studyProgram?.degreeLevel?.name,
+                            rightLabel = stringResource(R.string.sp_departman),
+                            rightValue = studyProgram?.department?.name
+                        )
+                        StudyProgramHeaderRow(
+                            leftLabel = stringResource(R.string.sp_naziv_programa),
+                            leftValue = studyProgram?.studyProgram?.name
+                                ?: "No entries in the database!",
+                            leftValueStyle = MaterialTheme.typography.headlineSmall,
+                            leftWeight = 3f,
+                            leftContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                            rightLabel = stringResource(R.string.sp_godina_akreditacije),
+                            rightValue = studyProgram?.studyProgram?.accreditationYear?.toString(),
+                            rightWeight = 1f
+                        )
+                        StudyProgramHeaderRow(
+                            leftLabel = stringResource(R.string.sp_godine_trajanja),
+                            leftValue = studyProgram?.studyProgram?.duration?.toString(),
+                            rightLabel = stringResource(R.string.sp_ukupan_broj_espb_bodova),
+                            rightValue = studyProgram?.studyProgram?.espb?.toString()
+                        )
+                    }
                 }
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
-                ) {
+                    ) {
                     Text(
                         text = stringResource(R.string.sp_odaberite_godinu),
                         textAlign = TextAlign.Center,
@@ -136,24 +140,21 @@ fun ProgramScreen(
                             selected = selectedYear == i,
                             enabled = searchText.isBlank(),
                             onClick = { selectedYear = i },
-                            label = {
-                                Text(text = "$i")
-                            }
+                            label = { Text(text = "$i") }
                         )
                     }
                     FilterChip(
                         selected = selectedYear == 0,
                         enabled = searchText.isBlank(),
                         onClick = { selectedYear = 0 },
-                        label = {
-                            Text(text = stringResource(R.string.sp_sve))
-                        }
+                        label = { Text(text = stringResource(R.string.sp_sve)) }
                     )
                 }
 
                 Card(
                     modifier = Modifier.padding(4.dp),
                     shape = CutCornerShape(4.dp),
+                    colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
                 ) {
                     Row(
                         modifier = Modifier
@@ -178,6 +179,9 @@ fun ProgramScreen(
                             onValueChange = { searchText = it },
                             modifier = Modifier.weight(2.5f),
                             singleLine = true,
+                            placeholder = { Text(stringResource(R.string.s_pronadji_predmet),
+                                style = MaterialTheme.typography.labelMedium,
+                                ) },
                             textStyle = MaterialTheme.typography.labelSmall,
                             shape = CutCornerShape(4.dp),
                             leadingIcon = {
@@ -209,7 +213,7 @@ fun ProgramScreen(
                     Card(
                         //modifier = Modifier.padding(4.dp),
                         shape = CutCornerShape(4.dp),
-                        //colors = CardDefaults.cardColors(MaterialTheme.colorScheme.onSurfaceVariant)
+                        colors = CardDefaults.cardColors(MaterialTheme.colorScheme.tertiaryContainer)
                     ) {
                         LazyColumn(
                             modifier = Modifier
@@ -217,35 +221,34 @@ fun ProgramScreen(
                                 .weight(1f)
                         ) {
                             items(semestersToShow.toList()) { semester ->
-                                val subjectsInSemester = filteredSubjects.filter {
-                                    it.semester == semester
+                                val subjectsInSemester = filteredSubjects.filter { subject ->
+                                    subject.semester == semester
                                 }
-                                val mandatorySubjects = subjectsInSemester.filter {
-                                    it.optionalBlockId == null
+                                val mandatorySubjects = subjectsInSemester.filter { subject ->
+                                    subject.optionalBlockId == null
                                 }
                                 val mandatoryCount = mandatorySubjects.size
-                                val mandatoryEspb = mandatorySubjects.sumOf {
-                                    it.espb
+                                val mandatoryEspb = mandatorySubjects.sumOf { subject ->
+                                    subject.espb
                                 }
                                 val optionalBlocksInSemester = studyProgram!!.optionalBlocks.filter {
-                                    block -> subjectsInSemester.any {
-                                        it.optionalBlockId == block.id
+                                    block -> subjectsInSemester.any { subject ->
+                                        subject.optionalBlockId == block.id
                                     }
                                 }
-                                val optionalCount = optionalBlocksInSemester.sumOf {
-                                    it.numberOfSubjetsToChoose
+                                val optionalCount = optionalBlocksInSemester.sumOf { block ->
+                                    block.numberOfSubjetsToChoose
                                 }
-                                val optionalEspb = optionalBlocksInSemester
-                                    .sumOf { block ->
-                                        val exampleSubject = subjectsInSemester.first {
-                                            it.optionalBlockId == block.id
+                                val optionalEspb = optionalBlocksInSemester.sumOf { block ->
+                                    val subject = subjectsInSemester.first { subject ->
+                                        subject.optionalBlockId == block.id
                                         }
-                                        exampleSubject.espb * block.numberOfSubjetsToChoose
+                                        subject.espb * block.numberOfSubjetsToChoose
                                     }
                                 val totalSubjects = mandatoryCount + optionalCount
                                 val totalEspb = mandatoryEspb + optionalEspb
 
-                                Card(
+                                Card( //for a semester
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(4.dp),
@@ -262,7 +265,6 @@ fun ProgramScreen(
                                             style = MaterialTheme.typography.titleMedium,
                                             fontWeight = FontWeight.Bold
                                         )
-
                                         mandatorySubjects.forEach { subject ->
                                             Row(
                                                 modifier = Modifier
@@ -271,14 +273,14 @@ fun ProgramScreen(
                                             ) {
                                                 Text(
                                                     text = subject.code,
-                                                    modifier = Modifier.weight(1f),
+                                                    modifier = Modifier.weight(1.1f),
                                                     style = MaterialTheme.typography.titleMedium,
                                                     textAlign = TextAlign.Left
                                                 )
                                                 Text(
                                                     text = subject.name,
                                                     modifier = Modifier
-                                                        .weight(3.5f)
+                                                        .weight(3.4f)
                                                         .clickable { onSubjectSelected(subject.id) },
                                                     color = MaterialTheme.colorScheme.tertiary,
                                                     style = MaterialTheme.typography.titleMedium,
@@ -293,12 +295,10 @@ fun ProgramScreen(
                                             }
                                         }
                                         optionalBlocksInSemester.forEach { block ->
-                                            val subjectsInBlock =
-                                                subjectsInSemester.filter {
-                                                    it.optionalBlockId == block.id
+                                            val subjectsInBlock = subjectsInSemester.filter { subject ->
+                                                    subject.optionalBlockId == block.id
                                                 }
                                             if (subjectsInBlock.isNotEmpty()) {
-
                                                 Text(
                                                     text = "${stringResource(R.string.p_izborni_blok)} ${block.blockNumber} (${
                                                         stringResource(
@@ -326,14 +326,14 @@ fun ProgramScreen(
                                                     ) {
                                                         Text(
                                                             text = subject.code,
-                                                            modifier = Modifier.weight(1f),
+                                                            modifier = Modifier.weight(1.1f),
                                                             style = MaterialTheme.typography.titleMedium,
                                                             textAlign = TextAlign.Left
                                                         )
                                                         Text(
                                                             text = subject.name,
                                                             modifier = Modifier
-                                                                .weight(3.5f)
+                                                                .weight(3.4f)
                                                                 .clickable {
                                                                     onSubjectSelected(
                                                                         subject.id
@@ -375,33 +375,33 @@ fun ProgramScreen(
                                     }
                                 }
                             }
-                            val subjectsInYear = studyProgram!!.subjects.filter {
-                                it.semester in semestersToShow
+                            val subjectsInYear = studyProgram!!.subjects.filter { subject ->
+                                subject.semester in semestersToShow
                             }
-                            val mandatorySubjectsInYear = subjectsInYear.filter {
-                                it.optionalBlockId == null
+                            val mandatorySubjectsInYear = subjectsInYear.filter { subject ->
+                                subject.optionalBlockId == null
                             }
-                            val mandatoryCount2 = mandatorySubjectsInYear.size
-                            val mandatoryEspb2 = mandatorySubjectsInYear.sumOf {
-                                it.espb
+                            val totalMandatory = mandatorySubjectsInYear.size
+                            val totalMandatoryEspb = mandatorySubjectsInYear.sumOf { subject ->
+                                subject.espb
                             }
                             val optionalBlocksInYear =
                                 studyProgram!!.optionalBlocks.filter { block ->
-                                    subjectsInYear.any {
-                                        it.optionalBlockId == block.id
+                                    subjectsInYear.any { subject ->
+                                        subject.optionalBlockId == block.id
                                     }
                                 }
-                            val optionalCount2 = optionalBlocksInYear.sumOf {
+                            val totalOptional = optionalBlocksInYear.sumOf {
                                 it.numberOfSubjetsToChoose
                             }
-                            val optionalEspb2 = optionalBlocksInYear.sumOf { block ->
-                                val subject = subjectsInYear.first {
-                                    it.optionalBlockId == block.id
+                            val totalOptionalEspb = optionalBlocksInYear.sumOf { block ->
+                                val subject = subjectsInYear.first { subject ->
+                                    subject.optionalBlockId == block.id
                                 }
                                 subject.espb * block.numberOfSubjetsToChoose
                             }
-                            val totalSubjectsYear = mandatoryCount2 + optionalCount2
-                            val totalEspbYear = mandatoryEspb2 + optionalEspb2
+                            val totalSubjectsYear = totalMandatory + totalOptional
+                            val totalEspbYear = totalMandatoryEspb + totalOptionalEspb
 
                             item {
                                 Row(

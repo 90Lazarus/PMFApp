@@ -3,18 +3,14 @@ package com.slobodan.pmfapp.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -27,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.slobodan.pmfapp.R
 import com.slobodan.pmfapp.data.model.enums.DegreeLevel
 import com.slobodan.pmfapp.data.model.enums.Department
-import com.slobodan.pmfapp.ui.components.PMFAppDegreeCard
+import com.slobodan.pmfapp.ui.components.PMFAppDegreeLevelCard
 import com.slobodan.pmfapp.ui.components.PMFAppHeader
 
 @Composable
@@ -38,8 +34,7 @@ fun DepartmentsScreen(
     Surface(
         modifier = Modifier.padding(4.dp),
         shape = RoundedCornerShape(4.dp),
-        tonalElevation = 4.dp,
-        //border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.primary)
+        tonalElevation = 4.dp
     ) {
         Column(
             modifier = Modifier
@@ -58,15 +53,15 @@ fun DepartmentsScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                PMFAppDegreeCard(
+                PMFAppDegreeLevelCard(
                     name = stringResource(R.string.oas),
                     selected = selectedDegree == DegreeLevel.BACHELORS
                 )
-                PMFAppDegreeCard(
+                PMFAppDegreeLevelCard(
                     name = stringResource(R.string.mas),
                     selected = selectedDegree == DegreeLevel.MASTERS
                 )
-                PMFAppDegreeCard(
+                PMFAppDegreeLevelCard(
                     name = stringResource(R.string.das),
                     selected = selectedDegree == DegreeLevel.DOCTORS
                 )
@@ -91,7 +86,6 @@ fun DepartmentsScreen(
                         onClick = { onDepartmentSelected(department) },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
-                        //border = BorderStroke(width = 2.dp, color = MaterialTheme.colorScheme.primaryContainer),
                         shape = RoundedCornerShape(9.dp)
                     ) {
                         Text(

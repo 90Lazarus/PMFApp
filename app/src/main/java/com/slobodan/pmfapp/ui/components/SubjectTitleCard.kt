@@ -24,8 +24,7 @@ fun SubjectTitleCard(
     Card(
         modifier = Modifier.fillMaxWidth().padding(4.dp),
         shape = CutCornerShape(4.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

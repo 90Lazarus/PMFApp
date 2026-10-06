@@ -21,9 +21,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,9 +47,7 @@ fun PMFTopAppBar(
     fun setAppLanguage(languageTag: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val localeManager = context.getSystemService(LocaleManager::class.java)
-
-            localeManager.applicationLocales =
-                LocaleList.forLanguageTags(languageTag)
+            localeManager.applicationLocales = LocaleList.forLanguageTags(languageTag)
         }
     }
     var languageMenuExpanded by remember { mutableStateOf(false) }

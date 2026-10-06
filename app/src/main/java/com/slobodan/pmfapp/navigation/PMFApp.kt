@@ -30,7 +30,13 @@ import com.slobodan.pmfapp.ui.screens.SubjectScreen
 @Composable
 fun PMFApp() {
     var selectedDegreeName by rememberSaveable { mutableStateOf<String?>(null) }
-    val selectedDegree = selectedDegreeName?.let { DegreeLevel.valueOf(it) }
+    val selectedDegree =
+//        if (selectedDegreeName != null) {
+//            DegreeLevel.valueOf(selectedDegreeName)
+//        } else {
+//            null
+//        }
+        selectedDegreeName?.let { DegreeLevel.valueOf(it) }
     var selectedDepartmentName by rememberSaveable { mutableStateOf<String?>(null) }
     val selectedDepartment = selectedDepartmentName?.let { Department.valueOf(it) }
     var selectedProgramName by rememberSaveable { mutableStateOf<String?>(null) }

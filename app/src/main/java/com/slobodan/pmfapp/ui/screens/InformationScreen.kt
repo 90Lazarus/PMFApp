@@ -41,7 +41,6 @@ fun InformationScreen() {
         modifier = Modifier.padding(4.dp),
         shape = RoundedCornerShape(4.dp),
         tonalElevation = 4.dp,
-        //border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.primary)
     ) {
         Column(
             modifier = Modifier
@@ -55,7 +54,7 @@ fun InformationScreen() {
                     .fillMaxWidth()
                     .padding(4.dp),
                 shape = CutCornerShape(4.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
             ) {
                 Text(
                     text = stringResource(R.string.kontakt_i_informacije),
@@ -69,6 +68,7 @@ fun InformationScreen() {
                     .fillMaxWidth()
                     .padding(4.dp),
                 shape = CutCornerShape(4.dp),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer)
             ) {
                 LazyColumn(
                     modifier = Modifier.padding(4.dp)
@@ -79,7 +79,7 @@ fun InformationScreen() {
                                 .fillMaxWidth()
                                 .padding(4.dp),
                             shape = CutCornerShape(4.dp),
-                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
+                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                         ) {
                             InformationContactItem(
                                 icon = Icons.Default.AddHome,
@@ -100,7 +100,7 @@ fun InformationScreen() {
                                 .fillMaxWidth()
                                 .padding(4.dp),
                             shape = CutCornerShape(4.dp),
-                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
+                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                         ) {
                             InformationContactItem(
                                 icon = Icons.Default.Phone,
@@ -123,7 +123,7 @@ fun InformationScreen() {
                                 .fillMaxWidth()
                                 .padding(4.dp),
                             shape = CutCornerShape(4.dp),
-                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
+                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                         ) {
                             InformationContactItem(
                                 icon = Icons.Default.Fax,
@@ -138,7 +138,7 @@ fun InformationScreen() {
                                 .fillMaxWidth()
                                 .padding(4.dp),
                             shape = CutCornerShape(4.dp),
-                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
+                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                         ) {
                             InformationContactItem(
                                 icon = Icons.Default.Pin,
@@ -153,7 +153,7 @@ fun InformationScreen() {
                                 .fillMaxWidth()
                                 .padding(4.dp),
                             shape = CutCornerShape(4.dp),
-                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
+                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                         ) {
                             InformationContactItem(
                                 icon = Icons.Default.AccountBalanceWallet,
@@ -168,7 +168,7 @@ fun InformationScreen() {
                                 .fillMaxWidth()
                                 .padding(4.dp),
                             shape = CutCornerShape(4.dp),
-                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
+                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                         ) {
                             InformationContactItem(
                                 icon = Icons.Default.Email,
@@ -191,7 +191,7 @@ fun InformationScreen() {
                                 .fillMaxWidth()
                                 .padding(4.dp),
                             shape = CutCornerShape(4.dp),
-                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
+                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                         ) {
                             InformationContactItem(
                                 icon = Icons.Default.Facebook,
@@ -214,7 +214,7 @@ fun InformationScreen() {
                                 .fillMaxWidth()
                                 .padding(4.dp),
                             shape = CutCornerShape(4.dp),
-                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.primaryContainer)
+                            colors = CardDefaults.cardColors(MaterialTheme.colorScheme.secondaryContainer)
                         ) {
                             InformationContactItem(
                                 icon = Icons.Default.CameraAlt,

@@ -2,7 +2,9 @@ package com.slobodan.pmfapp.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +22,8 @@ fun SubjectInfoItem(
 ) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(4.dp),
+        shape = CutCornerShape(4.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Text( // one text but two styles, first part should be bold, second nope
             modifier = Modifier.padding(4.dp),

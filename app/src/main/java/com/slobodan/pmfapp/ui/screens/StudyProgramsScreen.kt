@@ -23,22 +23,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.slobodan.pmfapp.R
+import com.slobodan.pmfapp.data.config.availablePrograms
 import com.slobodan.pmfapp.data.model.enums.DegreeLevel
 import com.slobodan.pmfapp.data.model.enums.Department
 import com.slobodan.pmfapp.data.model.enums.StudyPrograms
-import com.slobodan.pmfapp.data.config.availablePrograms
-import com.slobodan.pmfapp.ui.components.PMFAppDegreeCard
+import com.slobodan.pmfapp.ui.components.PMFAppDegreeLevelCard
 import com.slobodan.pmfapp.ui.components.PMFAppHeader
-import com.slobodan.pmfapp.viewmodel.StudyProgramViewModel
 
 @Composable
 fun StudyProgramsScreen(
     selectedDegree: DegreeLevel,
     selectedDepartment: Department,
-    onStudyProgramSelected: (StudyPrograms) -> Unit,
-    viewModel: StudyProgramViewModel = viewModel(factory = StudyProgramViewModel.factory)
+    onStudyProgramSelected: (StudyPrograms) -> Unit
 ) {
     val programs = availablePrograms[selectedDegree to selectedDepartment]
     val image = when (selectedDepartment) {
@@ -52,8 +49,7 @@ fun StudyProgramsScreen(
     Surface(
         modifier = Modifier.padding(4.dp),
         shape = RoundedCornerShape(4.dp),
-        tonalElevation = 4.dp,
-        //border = BorderStroke(width = 1.dp, color = Color.Magenta)
+        tonalElevation = 4.dp
     ) {
         Column(
             modifier = Modifier
@@ -72,15 +68,15 @@ fun StudyProgramsScreen(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                PMFAppDegreeCard(
+                PMFAppDegreeLevelCard(
                     name = stringResource(R.string.oas),
                     selected = selectedDegree == DegreeLevel.BACHELORS
                 )
-                PMFAppDegreeCard(
+                PMFAppDegreeLevelCard(
                     name = stringResource(R.string.mas),
                     selected = selectedDegree == DegreeLevel.MASTERS
                 )
-                PMFAppDegreeCard(
+                PMFAppDegreeLevelCard(
                     name = stringResource(R.string.das),
                     selected = selectedDegree == DegreeLevel.DOCTORS
                 )
@@ -98,7 +94,6 @@ fun StudyProgramsScreen(
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        //.weight(1f)
                         .padding(4.dp),
                     contentScale = ContentScale.Fit
                 )
@@ -114,7 +109,6 @@ fun StudyProgramsScreen(
                         onClick = { onStudyProgramSelected(program) },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
-                        //border = BorderStroke(width = 2.dp, color = MaterialTheme.colorScheme.primaryContainer),
                         shape = RoundedCornerShape(9.dp)
                     ) {
                         Text(text = stringResource( program.displayName),
