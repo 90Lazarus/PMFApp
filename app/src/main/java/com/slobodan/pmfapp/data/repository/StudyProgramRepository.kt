@@ -6,7 +6,7 @@ import com.slobodan.pmfapp.data.model.relation.StudyProgramWithDetailsWithSubjec
 
 class StudyProgramRepository (private val studyProgramDao: StudyProgramDao) {
     suspend fun getStudyProgram(studyProgram: StudyPrograms): StudyProgramWithDetailsWithSubjects? {
-        val database = studyProgram.dbName?: return null
-        return studyProgramDao.getStudyProgramAll(database)
+        val dbProgramName = studyProgram.databaseStudyProgramName?: return null
+        return studyProgramDao.getStudyProgramAll(dbProgramName)
     }
 }

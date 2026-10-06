@@ -3,7 +3,7 @@ package com.slobodan.pmfapp.data.model.enums
 import androidx.annotation.StringRes
 import com.slobodan.pmfapp.R
 
-enum class StudyPrograms(@param:StringRes val displayName: Int, val dbName: String?) {
+enum class StudyPrograms(@param:StringRes val displayName: Int, val databaseStudyProgramName: String?) {
     //Biologija i ekologija
     B_BIO_B(R.string.b_bio_b, ""),
     M_BIO_B(R.string.m_bio_b, ""),

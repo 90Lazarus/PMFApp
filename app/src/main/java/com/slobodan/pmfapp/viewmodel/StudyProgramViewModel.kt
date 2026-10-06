@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class StudyProgramViewModel (
-    private val studyProgramRepository: StudyProgramRepository,
+    private val studyProgramRepository: StudyProgramRepository
     ) : ViewModel() {
     companion object {
         val factory: ViewModelProvider.Factory = viewModelFactory {

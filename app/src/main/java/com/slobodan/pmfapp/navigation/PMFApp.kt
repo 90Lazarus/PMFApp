@@ -46,7 +46,7 @@ fun PMFApp() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    //We've had one, yes. What about second back button
+
     val handleBack: () -> Unit = {
         if (currentRoute == PMFAppScreens.SUBJECT_SCREEN.name) {
             navController.popBackStack(
@@ -58,10 +58,9 @@ fun PMFApp() {
         }
     }
     BackHandler(
-        enabled = currentRoute != PMFAppScreens.DEGREE_LEVELS_SCREEN.name
-    ) {
-        handleBack()
-    }
+        enabled = currentRoute != PMFAppScreens.DEGREE_LEVELS_SCREEN.name,
+        onBack = handleBack
+    )
     Scaffold(
         bottomBar = {
             PMFAppBottomBar(
